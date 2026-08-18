@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Lump → Vinted 2.0</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background:
+        radial-gradient(circle at top left, #17352b, transparent 35%),
+        #0d1014;
+    color: #fff;
+}
+
+.container {
+    width: min(1050px, 94%);
+    margin: auto;
+    padding: 25px 0 60px;
+}
+
+header {
+    text-align: center;
+    padding: 25px 0 35px;
+}
+
+h1 {
+    font-size: clamp(36px, 7vw, 65px);
+    margin: 0;
+}
+
+h1 span {
+    color: #00d084;
+}
+
+.subtitle {
+    color: #8e959f;
+    margin-top: 10px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.card {
+    background: rgba(24, 28, 34, .94);
+    border: 1px solid #292f38;
+    border-radius: 20px;
+    padding: 22px;
+}
+
+.card h2 {
+    margin-top: 0;
+}
+
+label {
+    display: block;
+    color: #aeb4bd;
+    font-size: 13px;
+    margin: 15px 0 7px;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 13px;
+    background: #0f1216;
+    color: white;
+    border: 1px solid #343b45;
+    border-radius: 10px;
+    font-size: 15px;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+    border-color: #00d084;
+}
+
+input[type="file"] {
+    padding: 10px;
+}
+
+button {
+    border: 0;
+    border-radius: 11px;
+    padding: 13px 17px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.primary {
+    width: 100%;
+    margin-top: 20px;
+    background: #00d084;
+    color: #06130d;
+    font-size: 16px;
+}
+
+.primary:hover {
+    background: #00e894;
+}
+
+.secondary {
+    background: #292f38;
+    color: white;
+}
+
+.danger {
+    background: #3a2023;
+    color: #ff7d85;
+}
+
+.preview {
+    width: 100%;
+    height: 220px;
+    object-fit: contain;
+    background: #0b0e12;
+    border-radius: 14px;
+    margin-top: 12px;
+    display: none;
+}
+
+.result {
+    margin-top: 20px;
+    padding: 18px;
+    border-radius: 15px;
+    background: #101419;
+    display: none;
+}
+
+.big {
+    font-size: 34px;
+    font-weight: bold;
+}
+
+.green {
+    color: #00d084;
+}
+
+.yellow {
+    color: #ffc107;
+}
+
+.red {
+    color: #ff5252;
+}
+
+.max-buy {
+    margin-top: 12px;
+    padding: 12px;
+    border-radius: 10px;
+    background: #18251f;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 20px 0;
+}
+
+.stat {
+    background: #181c22;
+    border: 1px solid #292f38;
+    border-radius: 15px;
+    padding: 17px;
+}
+
+.stat-title {
+    color: #858c96;
+    font-size: 12px;
+}
+
+.stat-value {
+    margin-top: 7px;
+    font-size: 23px;
+    font-weight: bold;
+}
+
+.items {
+    margin-top: 20px;
+}
+
+.item {
+    display: grid;
+    grid-template-columns: 90px 1fr auto;
+    gap: 15px;
+    align-items: center;
+    background: #181c22;
+    border: 1px solid #292f38;
+    border-radius: 15px;
+    padding: 12px;
+    margin-bottom: 10px;
+}
+
+.item img {
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 10px;
+    background: #0c0f13;
+}
+
+.item-info h3 {
+    margin: 0 0 5px;
+}
+
+.item-info p {
+    margin: 3px 0;
+    color: #9ba2ac;
+    font-size: 13px;
+}
+
+.badge {
+    display: inline-block;
+    padding: 5px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.badge.green-bg {
+    background: #123d2c;
+    color: #00d084;
+}
+
+.badge.yellow-bg {
+    background: #3d3212;
+    color: #ffc107;
+}
+
+.badge.red-bg {
+    background: #3d171a;
+    color: #ff5252;
+}
+
+.empty {
+    text-align: center;
+    color: #656c75;
+    padding: 35px 10px;
+}
+
+@media(max-width: 750px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
+    .item {
+        grid-template-columns: 70px 1fr;
+    }
+
+    .item img {
+        width: 70px;
+        height: 70px;
+    }
+
+    .item-actions {
+        grid-column: 2;
+    }
+}
+</style>
+
+<style>
+.no-photo {
+    width: 90px;
+    height: 90px;
+    border-radius: 10px;
+    background: linear-gradient(145deg, #151a20, #0d1014);
+    border: 1px solid #343b45;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #7f8995;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: .3px;
+    line-height: 1.25;
+    padding: 8px;
+}
+@media(max-width: 750px) {
+    .no-photo {
+        width: 70px;
+        height: 70px;
+    }
+}
+</style>
+
+
+<style>
+:root {
+    --accent: #00d084;
+    --accent-hover: #00e894;
+    --accent-dark: #06130d;
+    --accent-soft: #18251f;
+    --accent-border: #245a47;
+    --page-glow: #17352b;
+}
+
+body {
+    background:
+        radial-gradient(circle at top left, var(--page-glow), transparent 35%),
+        #0d1014;
+}
+
+h1 span,
+.green,
+.green .stat-value {
+    color: var(--accent);
+}
+
+.primary {
+    background: var(--accent);
+    color: var(--accent-dark);
+}
+
+.primary:hover {
+    background: var(--accent-hover);
+}
+
+input:focus,
+select:focus {
+    border-color: var(--accent);
+}
+
+.max-buy {
+    background: var(--accent-soft);
+}
+
+.theme-panel {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: -10px auto 22px;
+    padding: 10px;
+    background: rgba(24, 28, 34, .75);
+    border: 1px solid #292f38;
+    border-radius: 14px;
+}
+
+.theme-panel > span {
+    color: #aeb4bd;
+    font-size: 13px;
+    font-weight: bold;
+    margin-right: 3px;
+}
+
+.theme-btn {
+    padding: 8px 11px;
+    border-radius: 9px;
+    background: #292f38;
+    color: white;
+    border: 1px solid #343b45;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.theme-btn:hover {
+    border-color: var(--accent);
+}
+
+.theme-btn.active {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 1px var(--accent);
+}
+</style>
+
+
+<style>
+/* Ciemniej, ale wyraźniej */
+body {
+    background:
+        radial-gradient(circle at top left, var(--page-glow), transparent 42%),
+        #151a20;
+}
+
+.card {
+    background: rgba(29, 34, 41, .97);
+    border-color: #3a424d;
+}
+
+.stat {
+    background: #20262e;
+    border-color: #3a424d;
+}
+
+.item {
+    background: #20262e;
+    border-color: #3a424d;
+}
+
+.result {
+    background: #1c2229;
+    border: 1px solid #353d48;
+}
+
+.theme-panel {
+    background: rgba(29, 34, 41, .92);
+    border-color: #3a424d;
+}
+
+input,
+select {
+    background: #171c22;
+    border-color: #414a56;
+}
+
+.secondary,
+.theme-btn {
+    background: #343b45;
+}
+
+.subtitle,
+label,
+.item-info p,
+.stat-title {
+    color: #aeb6c0;
+}
+
+.empty {
+    color: #7d8792;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<header>
+    <h1>Lump <span>→</span> Vinted</h1>
+    <div class="subtitle">
+        Twój mały kalkulator resellingu 👕💰
+    </div>
+</header>
+
+<div class="theme-panel">
+    <span>🎨 Motyw:</span>
+    <button type="button" class="theme-btn" onclick="setTheme('green')">🟢 Zielony</button>
+    <button type="button" class="theme-btn" onclick="setTheme('orange')">🟠 Pomarańczowy</button>
+    <button type="button" class="theme-btn" onclick="setTheme('blue')">🔵 Niebieski</button>
+    <button type="button" class="theme-btn" onclick="setTheme('purple')">🟣 Fioletowy</button>
+    <button type="button" class="theme-btn" onclick="setTheme('dark')">⚫ Ciemny</button>
+</div>
+
+
+
+<div class="stats">
+
+    <div class="stat">
+        <div class="stat-title">WYDAŁEŚ</div>
+        <div class="stat-value" id="totalSpent">0 zł</div>
+    </div>
+
+    <div class="stat">
+        <div class="stat-title">POTENCJALNA SPRZEDAŻ</div>
+        <div class="stat-value" id="totalSales">0 zł</div>
+    </div>
+
+    <div class="stat">
+        <div class="stat-title">POTENCJALNY ZYSK</div>
+        <div class="stat-value green" id="totalProfit">0 zł</div>
+    </div>
+
+</div>
+
+
+<div class="grid">
+
+    <div class="card">
+
+        <h2>➕ Dodaj rzecz</h2>
+
+        <label>Zdjęcie</label>
+        <input
+            type="file"
+            id="photo"
+            accept="image/*"
+            onchange="previewImage()"
+        >
+
+        <img id="preview" class="preview">
+
+        <label>Marka</label>
+        <input
+            id="brand"
+            placeholder="np. Nike, Adidas, Levi's"
+        >
+
+        <label>Kategoria</label>
+        <select id="category">
+            <option>Koszulka</option>
+            <option>Bluza</option>
+            <option>Kurtka</option>
+            <option>Spodnie</option>
+            <option>Buty</option>
+            <option>Sukienka</option>
+            <option>Sweter</option>
+            <option>Inne</option>
+        </select>
+
+        <label>Ilość rzeczy</label>
+        <input type="number" id="quantity" value="1" min="1" step="1">
+
+        <label>Cena zakupu w lumpie (zł) — za sztukę</label>
+        <input
+            type="number"
+            id="buy"
+            placeholder="np. 20"
+            min="0"
+            step="0.01"
+        >
+
+        <label>Przewidywana cena sprzedaży (zł)</label>
+        <input
+            type="number"
+            id="sell"
+            placeholder="np. 80"
+            min="0"
+            step="0.01"
+        >
+
+        <label>Inne koszty (zł)</label>
+        <input
+            type="number"
+            id="costs"
+            value="0"
+            min="0"
+            step="0.01"
+        >
+
+        <label>Minimalny zysk, jaki chcesz osiągnąć (zł)</label>
+        <input
+            type="number"
+            id="desiredProfit"
+            value="30"
+            min="0"
+            step="0.01"
+        >
+
+        <button class="primary" onclick="addItem()">
+            🔥 DODAJ I SPRAWDŹ
+        </button>
+
+        <div class="result" id="result">
+
+            <div>Ocena</div>
+
+            <div class="big" id="decision"></div>
+
+            <div id="profitResult"></div>
+
+            <div class="max-buy">
+                🎯 <b>Maksymalna cena zakupu:</b>
+                <span id="maxBuy"></span> / szt.
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>📦 Twoje rzeczy</h2>
+
+        <div id="items" class="items">
+            <div class="empty">
+                Jeszcze nic tutaj nie ma.<br>
+                Dodaj pierwszą rzecz.
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+
+<script>
+
+let items = JSON.parse(localStorage.getItem("lumpItems") || "[]");
+
+let currentPhoto = "";
+let editingItemId = null;
+
+
+/* =========================
+   ZDJĘCIE
+========================= */
+
+function previewImage() {
+
+    const file = document.getElementById("photo").files[0];
+    const preview = document.getElementById("preview");
+
+    if (!file) {
+        currentPhoto = "";
+        preview.style.display = "none";
+        return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = function(e) {
+
+        currentPhoto = e.target.result;
+
+        preview.src = currentPhoto;
+        preview.style.display = "block";
+    };
+
+    reader.readAsDataURL(file);
+}
+
+
+/* =========================
+   DODAWANIE
+========================= */
+
+function addItem() {
+
+    const brand =
+        document.getElementById("brand").value.trim();
+
+    const category =
+        document.getElementById("category").value;
+
+    const quantity =
+        Math.max(1, Math.floor(Number(document.getElementById("quantity").value) || 1));
+
+    const buy =
+        Number(document.getElementById("buy").value);
+
+    const sell =
+        Number(document.getElementById("sell").value);
+
+    const costs =
+        Number(document.getElementById("costs").value) || 0;
+
+    const desiredProfit =
+        Number(document.getElementById("desiredProfit").value) || 0;
+
+
+    if (!buy || !sell) {
+
+        alert("Wpisz cenę zakupu i cenę sprzedaży.");
+
+        return;
+    }
+
+
+    const totalCost = (buy + costs) * quantity;
+
+    const profitPerItem = sell - buy - costs;
+    const profit = profitPerItem * quantity;
+
+    const roi = (profitPerItem / (buy + costs)) * 100;
+
+
+    /*
+       Maksymalna cena zakupu,
+       żeby osiągnąć wybrany zysk.
+    */
+
+    const maxBuy =
+        sell - costs - desiredProfit;
+
+
+    let decision;
+    let decisionClass;
+
+    if (profit >= 50) {
+
+        decision = "🟢 BIERZ";
+        decisionClass = "green";
+
+    } else if (profit >= 20) {
+
+        decision = "🟡 MOŻE BYĆ";
+        decisionClass = "yellow";
+
+    } else {
+
+        decision = "🔴 ZOSTAW";
+        decisionClass = "red";
+    }
+
+
+    document.getElementById("result").style.display = "block";
+
+    document.getElementById("decision").textContent =
+        decision;
+
+    document.getElementById("decision").className =
+        "big " + decisionClass;
+
+    document.getElementById("profitResult").innerHTML =
+        "Ilość: <b>" + quantity + " szt.</b><br>" +
+        "Zysk łącznie: <b>" + profit.toFixed(2) + " zł</b><br>" +
+        "Zysk / szt.: <b>" + profitPerItem.toFixed(2) + " zł</b><br>" +
+        "ROI: <b>" +
+        roi.toFixed(1) +
+        "%</b>";
+
+
+    document.getElementById("maxBuy").textContent =
+        Math.max(0, maxBuy).toFixed(2) + " zł";
+
+
+    const itemData = {
+        brand: brand || "Bez marki",
+        category,
+        quantity,
+        buy,
+        sell,
+        costs,
+        profit,
+        roi,
+        photo: currentPhoto,
+        decision,
+        decisionClass
+    };
+
+    if (editingItemId !== null) {
+        const index = items.findIndex(item => item.id === editingItemId);
+        if (index !== -1) {
+            // Jeśli nie wybrano nowego zdjęcia, zostawiamy stare.
+            if (!currentPhoto) {
+                itemData.photo = items[index].photo || "";
+            }
+            items[index] = {
+                ...items[index],
+                ...itemData
+            };
+        }
+        editingItemId = null;
+        document.querySelector(".primary").textContent = "🔥 DODAJ I SPRAWDŹ";
+    } else {
+        items.unshift({
+            id: Date.now(),
+            ...itemData
+        });
+    }
+
+    save();
+    render();
+
+    /*
+       Czyścimy formularz,
+       ale zostawiamy zdjęcie w podglądzie
+       dopóki użytkownik nie wybierze następnego.
+    */
+
+    document.getElementById("brand").value = "";
+    document.getElementById("quantity").value = "1";
+    document.getElementById("buy").value = "";
+    document.getElementById("sell").value = "";
+    document.getElementById("costs").value = "0";
+
+    document.getElementById("photo").value = "";
+
+    currentPhoto = "";
+
+    document.getElementById("preview").style.display = "none";
+}
+
+
+/* =========================
+   WYŚWIETLANIE
+========================= */
+
+function render() {
+
+    const container =
+        document.getElementById("items");
+
+
+    if (items.length === 0) {
+
+        container.innerHTML = `
+            <div class="empty">
+                Jeszcze nic tutaj nie ma.<br>
+                Dodaj pierwszą rzecz.
+            </div>
+        `;
+
+        updateStats();
+        return;
+    }
+
+
+    container.innerHTML = items.map(item => {
+
+        let badgeClass = "red-bg";
+
+        if (item.decisionClass === "green") {
+            badgeClass = "green-bg";
+        }
+
+        if (item.decisionClass === "yellow") {
+            badgeClass = "yellow-bg";
+        }
+
+
+        const image = item.photo
+            ? `<img src="${item.photo}" alt="Zdjęcie ${escapeHtml(item.brand)}">`
+            : `<div class="no-photo">📷<br>Brak zdjęcia</div>`;
+
+
+        return `
+
+            <div class="item">
+
+                ${image}
+
+                <div class="item-info">
+
+                    <h3>
+                        ${escapeHtml(item.brand)}
+                    </h3>
+
+                    <p>
+                        ${escapeHtml(item.category)}
+                    </p>
+
+                    <p>Ilość: <b>${item.quantity || 1} szt.</b></p>
+                    <p>Zakup / szt.: <b>${item.buy.toFixed(2)} zł</b></p>
+                    <p>Zakup łącznie: <b>${((item.buy + item.costs) * (item.quantity || 1)).toFixed(2)} zł</b></p>
+
+                    <p>Sprzedaż / szt.: <b>${item.sell.toFixed(2)} zł</b></p>
+                    <p>Sprzedaż łącznie: <b>${(item.sell * (item.quantity || 1)).toFixed(2)} zł</b></p>
+
+                    <p>
+                        Zysk:
+                        <b class="green">
+                            ${item.profit.toFixed(2)} zł
+                        </b>
+                    </p>
+
+                    <span class="badge ${badgeClass}">
+                        ${item.decision}
+                    </span>
+
+                </div>
+
+                <div class="item-actions">
+
+                    <button
+                        class="secondary"
+                        onclick="editItem(${item.id})">
+                        Edytuj
+                    </button>
+                    <button
+                        class="danger"
+                        onclick="deleteItem(${item.id})">
+                        Usuń
+                    </button>
+
+                </div>
+
+            </div>
+
+        `;
+
+    }).join("");
+
+
+    updateStats();
+}
+
+
+/* =========================
+   STATYSTYKI
+========================= */
+
+function updateStats() {
+
+    let spent = 0;
+    let sales = 0;
+    let profit = 0;
+
+
+    items.forEach(item => {
+
+        const quantity = item.quantity || 1;
+        spent += (item.buy + item.costs) * quantity;
+        sales += item.sell * quantity;
+        profit += item.profit;
+
+    });
+
+
+    document.getElementById("totalSpent")
+        .textContent =
+        spent.toFixed(2) + " zł";
+
+
+    document.getElementById("totalSales")
+        .textContent =
+        sales.toFixed(2) + " zł";
+
+
+    document.getElementById("totalProfit")
+        .textContent =
+        profit.toFixed(2) + " zł";
+}
+
+
+/* =========================
+   USUWANIE
+========================= */
+
+function editItem(id) {
+
+    const item = items.find(item => item.id === id);
+    if (!item) return;
+
+    editingItemId = id;
+
+    document.getElementById("brand").value = item.brand === "Bez marki" ? "" : item.brand;
+    document.getElementById("category").value = item.category;
+    document.getElementById("quantity").value = item.quantity || 1;
+    document.getElementById("buy").value = item.buy;
+    document.getElementById("sell").value = item.sell;
+    document.getElementById("costs").value = item.costs || 0;
+
+    currentPhoto = item.photo || "";
+    const preview = document.getElementById("preview");
+
+    if (currentPhoto) {
+        preview.src = currentPhoto;
+        preview.style.display = "block";
+    } else {
+        preview.style.display = "none";
+    }
+
+    document.querySelector(".primary").textContent = "💾 ZAPISZ ZMIANY";
+
+    document.getElementById("brand").scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    });
+}
+
+
+function deleteItem(id) {
+
+    items =
+        items.filter(item => item.id !== id);
+
+    save();
+
+    render();
+}
+
+
+function updateClearAllButton() {
+    const button = document.getElementById("clearAllBtn");
+    if (button) {
+        button.style.display = items.length > 0 ? "inline-block" : "none";
+    }
+}
+
+
+function clearAll() {
+    if (items.length === 0) {
+        render();
+        return;
+    }
+
+    if (!confirm("Na pewno usunąć wszystkie rzeczy?")) {
+        return;
+    }
+
+    items = [];
+    save();
+    render();
+}
+
+
+/* =========================
+   ZAPIS
+========================= */
+
+function save() {
+
+    localStorage.setItem(
+        "lumpItems",
+        JSON.stringify(items)
+    );
+}
+
+
+/* =========================
+   BEZPIECZNE TEKSTY
+========================= */
+
+function escapeHtml(text) {
+
+    return String(text)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+}
+
+
+/* START */
+
+render();
+
+</script>
+
+
+<div id="musicPlayer" style="
+    position:fixed;
+    right:18px;
+    bottom:18px;
+    z-index:9999;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:10px 13px;
+    border:1px solid #292f38;
+    border-radius:14px;
+    background:rgba(24,28,34,.96);
+    box-shadow:0 10px 30px rgba(0,0,0,.35);
+">
+    <span style="font-size:13px;color:#aeb4bd;">🎷 Spokojny jazz</span>
+    <button id="musicBtn" class="secondary" type="button" onclick="toggleMusic()">▶️ Włącz</button>
+</div>
+
+
+<script>
+/* =========================
+   SPOKOJNY JAZZ — Web Audio
+   ========================= */
+let jazzAudio = null;
+let jazzTimer = null;
+let jazzPlaying = false;
+
+function startJazz() {
+    if (jazzPlaying) return;
+
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContext) {
+        alert("Twoja przeglądarka nie obsługuje muzyki Web Audio.");
+        return;
+    }
+
+    jazzAudio = new AudioContext();
+
+    const master = jazzAudio.createGain();
+    master.gain.value = 0.055;
+    master.connect(jazzAudio.destination);
+
+    // Bardzo delikatny bas + akordy septymowe.
+    const chords = [
+        [261.63, 329.63, 392.00, 493.88], // Cmaj7
+        [220.00, 261.63, 329.63, 392.00], // Am7
+        [174.61, 220.00, 261.63, 329.63], // Fmaj7
+        [196.00, 246.94, 293.66, 349.23]  // G7
+    ];
+
+    let step = 0;
+
+    function note(freq, duration, volume, type="sine", delay=0) {
+        const now = jazzAudio.currentTime + delay;
+        const osc = jazzAudio.createOscillator();
+        const gain = jazzAudio.createGain();
+
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, now);
+
+        gain.gain.setValueAtTime(0.0001, now);
+        gain.gain.exponentialRampToValueAtTime(volume, now + 0.12);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+
+        osc.connect(gain);
+        gain.connect(master);
+        osc.start(now);
+        osc.stop(now + duration + 0.05);
+    }
+
+    function playChord() {
+        const chord = chords[step % chords.length];
+
+        chord.forEach((freq, i) => {
+            note(freq, 3.7, 0.20, "sine", i * 0.035);
+        });
+
+        // Delikatny bas.
+        note(chord[0] / 2, 3.4, 0.30, "triangle");
+
+        // Subtelna "jazzowa" pojedyncza nuta.
+        const melody = [chord[1], chord[2], chord[3], chord[2]];
+        note(melody[step % melody.length], 1.25, 0.12, "sine", 1.45);
+
+        step++;
+    }
+
+    jazzPlaying = true;
+    playChord();
+    jazzTimer = setInterval(playChord, 3800);
+
+    const btn = document.getElementById("musicBtn");
+    if (btn) btn.textContent = "⏸️ Pauza";
+}
+
+function stopJazz() {
+    if (!jazzPlaying) return;
+
+    clearInterval(jazzTimer);
+    jazzTimer = null;
+
+    if (jazzAudio) {
+        jazzAudio.close();
+        jazzAudio = null;
+    }
+
+    jazzPlaying = false;
+
+    const btn = document.getElementById("musicBtn");
+    if (btn) btn.textContent = "▶️ Włącz";
+}
+
+function toggleMusic() {
+    if (jazzPlaying) {
+        stopJazz();
+    } else {
+        startJazz();
+    }
+}
+</script>
+
+
+<script>
+/* =========================
+   MOTYWY / KOLORY
+   ========================= */
+const themes = {
+    green: {
+        accent: "#00d084",
+        hover: "#00e894",
+        dark: "#06130d",
+        soft: "#18251f",
+        border: "#245a47",
+        glow: "#17352b"
+    },
+    orange: {
+        accent: "#ff8a00",
+        hover: "#ffa733",
+        dark: "#1a0e00",
+        soft: "#2b1d0d",
+        border: "#6b4518",
+        glow: "#3a2410"
+    },
+    blue: {
+        accent: "#3b82f6",
+        hover: "#60a5fa",
+        dark: "#07111f",
+        soft: "#12233d",
+        border: "#244a7a",
+        glow: "#102a4d"
+    },
+    purple: {
+        accent: "#a855f7",
+        hover: "#c084fc",
+        dark: "#160b20",
+        soft: "#281638",
+        border: "#563477",
+        glow: "#29143d"
+    },
+    dark: {
+        accent: "#9aa4b2",
+        hover: "#c0c7d0",
+        dark: "#11151a",
+        soft: "#1c2229",
+        border: "#3b434d",
+        glow: "#20262e"
+    }
+};
+
+function setTheme(name) {
+    const theme = themes[name];
+    if (!theme) return;
+
+    const root = document.documentElement;
+    root.style.setProperty("--accent", theme.accent);
+    root.style.setProperty("--accent-hover", theme.hover);
+    root.style.setProperty("--accent-dark", theme.dark);
+    root.style.setProperty("--accent-soft", theme.soft);
+    root.style.setProperty("--accent-border", theme.border);
+    root.style.setProperty("--page-glow", theme.glow);
+
+    localStorage.setItem("lumpTheme", name);
+
+    document.querySelectorAll(".theme-btn").forEach(btn => {
+        btn.classList.remove("active");
+    });
+
+    const active = [...document.querySelectorAll(".theme-btn")]
+        .find(btn => btn.getAttribute("onclick") === `setTheme('${name}')`);
+
+    if (active) active.classList.add("active");
+}
+
+function loadTheme() {
+    setTheme(localStorage.getItem("lumpTheme") || "green");
+}
+
+loadTheme();
+</script>
+
+</body>
+</html>
