@@ -1,0 +1,5356 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#080b12">
+<title>LUMP PRO — Ultimate Reselling OS</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+:root{
+    --bg:#070910;
+    --bg-soft:#0b0f18;
+    --panel:#0d121d;
+    --panel-2:#111827;
+    --panel-3:#151d2c;
+    --border:rgba(255,255,255,.075);
+    --border-hover:rgba(124,92,255,.38);
+
+    --text:#f7f8fc;
+    --muted:#8993a7;
+    --muted-2:#596477;
+
+    --accent:#8b5cf6;
+    --accent-2:#4f8cff;
+    --accent-soft:rgba(139,92,246,.12);
+
+    --green:#24d47b;
+    --green-soft:rgba(36,212,123,.11);
+
+    --red:#ff5571;
+    --red-soft:rgba(255,85,113,.11);
+
+    --yellow:#ffc857;
+    --yellow-soft:rgba(255,200,87,.11);
+
+    --cyan:#35c8ff;
+    --cyan-soft:rgba(53,200,255,.11);
+
+    --radius:18px;
+    --radius-sm:12px;
+
+    --shadow:0 24px 80px rgba(0,0,0,.32);
+    --shadow-sm:0 10px 35px rgba(0,0,0,.18);
+
+    --sidebar:250px;
+    --topbar:72px;
+}
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    background:
+        radial-gradient(circle at 15% 0%,rgba(139,92,246,.12),transparent 30%),
+        radial-gradient(circle at 90% 10%,rgba(79,140,255,.09),transparent 30%),
+        var(--bg);
+    color:var(--text);
+    min-height:100vh;
+    overflow-x:hidden;
+}
+
+button,
+input,
+select,
+textarea{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.hidden{
+    display:none!important;
+}
+
+::selection{
+    background:rgba(139,92,246,.35);
+}
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+::-webkit-scrollbar{
+    width:8px;
+    height:8px;
+}
+
+::-webkit-scrollbar-track{
+    background:#070910;
+}
+
+::-webkit-scrollbar-thumb{
+    background:#242d3e;
+    border-radius:20px;
+}
+
+::-webkit-scrollbar-thumb:hover{
+    background:#354157;
+}
+
+/* =========================================================
+   LOGIN
+========================================================= */
+
+.login-screen{
+    min-height:100vh;
+    display:grid;
+    place-items:center;
+    padding:24px;
+    position:relative;
+    overflow:hidden;
+    background:
+        radial-gradient(circle at 50% 20%,rgba(139,92,246,.2),transparent 35%),
+        radial-gradient(circle at 20% 80%,rgba(79,140,255,.12),transparent 30%),
+        #05070d;
+}
+
+.login-glow{
+    position:absolute;
+    width:500px;
+    height:500px;
+    border-radius:50%;
+    background:rgba(139,92,246,.08);
+    filter:blur(100px);
+    pointer-events:none;
+}
+
+.login-box{
+    width:440px;
+    max-width:100%;
+    padding:42px;
+    border:1px solid var(--border);
+    background:rgba(13,18,29,.82);
+    backdrop-filter:blur(28px);
+    border-radius:28px;
+    box-shadow:var(--shadow);
+    position:relative;
+    z-index:2;
+    animation:loginIn .65s ease;
+}
+
+@keyframes loginIn{
+    from{
+        opacity:0;
+        transform:translateY(20px) scale(.98);
+    }
+    to{
+        opacity:1;
+        transform:none;
+    }
+}
+
+.login-logo{
+    width:76px;
+    height:76px;
+    border-radius:22px;
+    display:grid;
+    place-items:center;
+    font-size:34px;
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));
+    box-shadow:0 20px 55px rgba(139,92,246,.32);
+    margin:0 auto 24px;
+}
+
+.login-box h1{
+    text-align:center;
+    font-size:31px;
+    letter-spacing:-1px;
+}
+
+.login-box .subtitle{
+    color:var(--muted);
+    text-align:center;
+    margin-top:8px;
+    margin-bottom:28px;
+    font-size:14px;
+}
+
+.login-field{
+    position:relative;
+}
+
+.login-field input{
+    width:100%;
+    height:54px;
+    border:1px solid var(--border);
+    background:#080c14;
+    color:#fff;
+    border-radius:14px;
+    outline:none;
+    padding:0 16px;
+    transition:.2s;
+}
+
+.login-field input:focus{
+    border-color:var(--accent);
+    box-shadow:0 0 0 4px var(--accent-soft);
+}
+
+.login-btn{
+    width:100%;
+    height:54px;
+    border:0;
+    color:white;
+    font-weight:800;
+    border-radius:14px;
+    margin-top:12px;
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));
+    box-shadow:0 14px 30px rgba(139,92,246,.22);
+    transition:.2s;
+}
+
+.login-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 18px 40px rgba(139,92,246,.32);
+}
+
+.login-hint{
+    text-align:center;
+    color:var(--muted-2);
+    font-size:11px;
+    margin-top:15px;
+}
+
+/* =========================================================
+   TOPBAR
+========================================================= */
+
+.topbar{
+    position:fixed;
+    left:0;
+    right:0;
+    top:0;
+    height:var(--topbar);
+    z-index:100;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 24px;
+    border-bottom:1px solid var(--border);
+    background:rgba(7,9,16,.78);
+    backdrop-filter:blur(22px);
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    font-weight:900;
+    letter-spacing:-.5px;
+}
+
+.brand-icon{
+    width:39px;
+    height:39px;
+    display:grid;
+    place-items:center;
+    border-radius:12px;
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));
+    box-shadow:0 10px 28px rgba(139,92,246,.25);
+}
+
+.brand-name{
+    font-size:18px;
+}
+
+.brand-pro{
+    color:var(--accent);
+}
+
+.top-right{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.top-search{
+    height:40px;
+    min-width:230px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:0 12px;
+    border:1px solid var(--border);
+    background:rgba(255,255,255,.035);
+    border-radius:11px;
+    color:var(--muted);
+}
+
+.top-search span{
+    font-size:13px;
+}
+
+.top-search kbd{
+    margin-left:auto;
+    font-size:10px;
+    padding:3px 6px;
+    border:1px solid var(--border);
+    border-radius:5px;
+    color:var(--muted);
+}
+
+.icon-btn{
+    width:40px;
+    height:40px;
+    display:grid;
+    place-items:center;
+    border:1px solid var(--border);
+    background:rgba(255,255,255,.035);
+    color:#fff;
+    border-radius:11px;
+    transition:.2s;
+}
+
+.icon-btn:hover{
+    background:rgba(255,255,255,.08);
+    border-color:var(--border-hover);
+}
+
+.user-pill{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    padding-left:7px;
+}
+
+.avatar{
+    width:34px;
+    height:34px;
+    display:grid;
+    place-items:center;
+    border-radius:10px;
+    font-size:13px;
+    font-weight:900;
+    background:linear-gradient(135deg,#222b3e,#111827);
+    border:1px solid var(--border);
+}
+
+.user-name{
+    font-size:12px;
+    font-weight:700;
+}
+
+/* =========================================================
+   LAYOUT
+========================================================= */
+
+.layout{
+    min-height:100vh;
+    padding-top:var(--topbar);
+}
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:var(--topbar);
+    bottom:0;
+    width:var(--sidebar);
+    border-right:1px solid var(--border);
+    background:rgba(7,9,16,.78);
+    padding:20px 13px;
+    overflow-y:auto;
+}
+
+.nav-section{
+    margin-bottom:24px;
+}
+
+.nav-label{
+    padding:0 11px 9px;
+    font-size:10px;
+    font-weight:800;
+    letter-spacing:1.2px;
+    text-transform:uppercase;
+    color:#505b6f;
+}
+
+.nav-btn{
+    width:100%;
+    height:44px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:0 12px;
+    border:1px solid transparent;
+    background:transparent;
+    color:#8d97aa;
+    border-radius:12px;
+    text-align:left;
+    margin-bottom:4px;
+    transition:.18s;
+}
+
+.nav-btn:hover{
+    color:#fff;
+    background:rgba(255,255,255,.045);
+}
+
+.nav-btn.active{
+    color:#fff;
+    background:linear-gradient(
+        90deg,
+        rgba(139,92,246,.18),
+        rgba(79,140,255,.06)
+    );
+    border-color:rgba(139,92,246,.18);
+}
+
+.nav-icon{
+    width:22px;
+    text-align:center;
+    font-size:16px;
+}
+
+.nav-count{
+    margin-left:auto;
+    min-width:22px;
+    height:20px;
+    padding:0 6px;
+    display:grid;
+    place-items:center;
+    border-radius:6px;
+    background:rgba(255,255,255,.06);
+    color:#8993a7;
+    font-size:10px;
+    font-weight:800;
+}
+
+.sidebar-bottom{
+    border-top:1px solid var(--border);
+    padding-top:14px;
+}
+
+.main{
+    margin-left:var(--sidebar);
+    padding:30px;
+    width:calc(100% - var(--sidebar));
+    max-width:1800px;
+}
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+.page{
+    animation:pageIn .35s ease;
+}
+
+@keyframes pageIn{
+    from{
+        opacity:0;
+        transform:translateY(7px);
+    }
+    to{
+        opacity:1;
+        transform:none;
+    }
+}
+
+.page-head{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:20px;
+    margin-bottom:24px;
+}
+
+.eyebrow{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    color:var(--accent);
+    text-transform:uppercase;
+    font-size:10px;
+    font-weight:900;
+    letter-spacing:1.4px;
+    margin-bottom:7px;
+}
+
+.page-head h1{
+    font-size:30px;
+    letter-spacing:-1px;
+}
+
+.page-head p{
+    color:var(--muted);
+    font-size:13px;
+    margin-top:6px;
+}
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.primary{
+    height:44px;
+    border:0;
+    padding:0 17px;
+    border-radius:12px;
+    color:#fff;
+    font-size:12px;
+    font-weight:800;
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));
+    box-shadow:0 10px 25px rgba(139,92,246,.18);
+    transition:.2s;
+}
+
+.primary:hover{
+    transform:translateY(-2px);
+    box-shadow:0 14px 30px rgba(139,92,246,.3);
+}
+
+.secondary{
+    height:42px;
+    padding:0 14px;
+    border:1px solid var(--border);
+    border-radius:11px;
+    background:rgba(255,255,255,.035);
+    color:#fff;
+    font-size:12px;
+    font-weight:700;
+    transition:.2s;
+}
+
+.secondary:hover{
+    background:rgba(255,255,255,.075);
+    border-color:var(--border-hover);
+}
+
+.danger{
+    color:var(--red);
+    border-color:rgba(255,85,113,.16);
+}
+
+.success{
+    color:var(--green);
+    border-color:rgba(36,212,123,.16);
+}
+
+/* =========================================================
+   CARDS
+========================================================= */
+
+.card{
+    border:1px solid var(--border);
+    background:
+        linear-gradient(
+            145deg,
+            rgba(17,24,39,.88),
+            rgba(11,15,24,.88)
+        );
+    border-radius:var(--radius);
+    box-shadow:var(--shadow-sm);
+    padding:20px;
+}
+
+.card + .card{
+    margin-top:18px;
+}
+
+.card-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+    margin-bottom:18px;
+}
+
+.card-title{
+    font-size:15px;
+    font-weight:800;
+}
+
+.card-subtitle{
+    color:var(--muted);
+    font-size:11px;
+    margin-top:4px;
+}
+
+.card-action{
+    color:var(--muted);
+    font-size:11px;
+}
+
+/* =========================================================
+   KPI
+========================================================= */
+
+.kpi-grid{
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    gap:13px;
+    margin-bottom:18px;
+}
+
+.kpi{
+    position:relative;
+    overflow:hidden;
+    min-height:128px;
+    padding:17px;
+    border:1px solid var(--border);
+    background:linear-gradient(
+        145deg,
+        rgba(18,25,40,.95),
+        rgba(11,15,24,.95)
+    );
+    border-radius:16px;
+    transition:.25s;
+}
+
+.kpi:hover{
+    transform:translateY(-3px);
+    border-color:var(--border-hover);
+}
+
+.kpi::after{
+    content:"";
+    position:absolute;
+    width:110px;
+    height:110px;
+    right:-55px;
+    top:-55px;
+    border-radius:50%;
+    background:var(--accent);
+    opacity:.07;
+}
+
+.kpi-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.kpi-icon{
+    width:32px;
+    height:32px;
+    display:grid;
+    place-items:center;
+    border-radius:9px;
+    background:var(--accent-soft);
+    font-size:14px;
+}
+
+.kpi-trend{
+    font-size:10px;
+    font-weight:800;
+    color:var(--green);
+}
+
+.kpi-label{
+    color:var(--muted);
+    font-size:10px;
+    font-weight:700;
+    text-transform:uppercase;
+    margin-top:16px;
+}
+
+.kpi-value{
+    font-size:22px;
+    font-weight:900;
+    letter-spacing:-.5px;
+    margin-top:5px;
+}
+
+.green{color:var(--green)!important}
+.red{color:var(--red)!important}
+.yellow{color:var(--yellow)!important}
+.blue{color:#69a7ff!important}
+.cyan{color:var(--cyan)!important}
+
+/* =========================================================
+   DASHBOARD GRID
+========================================================= */
+
+.dashboard-grid{
+    display:grid;
+    grid-template-columns:minmax(0,1.5fr) minmax(320px,.7fr);
+    gap:18px;
+}
+
+.dashboard-grid-2{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+    margin-top:18px;
+}
+
+/* =========================================================
+   CHART
+========================================================= */
+
+.chart-area{
+    height:290px;
+    position:relative;
+    padding:18px 4px 0;
+}
+
+.chart-grid{
+    position:absolute;
+    inset:20px 0 35px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    pointer-events:none;
+}
+
+.chart-grid-line{
+    border-top:1px dashed rgba(255,255,255,.055);
+}
+
+.chart-bars{
+    height:100%;
+    display:flex;
+    align-items:flex-end;
+    gap:8px;
+    position:relative;
+    z-index:2;
+    padding:0 5px 27px;
+}
+
+.chart-bar-wrap{
+    flex:1;
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
+    align-items:center;
+    gap:7px;
+}
+
+.chart-bar{
+    width:100%;
+    max-width:30px;
+    min-height:3px;
+    border-radius:8px 8px 3px 3px;
+    background:linear-gradient(
+        to top,
+        var(--accent),
+        #65a6ff
+    );
+    box-shadow:0 0 20px rgba(139,92,246,.1);
+    transition:.35s;
+}
+
+.chart-bar:hover{
+    filter:brightness(1.35);
+    transform:scaleX(1.08);
+}
+
+.chart-label{
+    position:absolute;
+    bottom:0;
+    font-size:9px;
+    color:#566176;
+}
+
+/* =========================================================
+   GOAL
+========================================================= */
+
+.goal-hero{
+    display:flex;
+    align-items:center;
+    gap:20px;
+}
+
+.donut{
+    width:125px;
+    height:125px;
+    flex:0 0 125px;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    background:conic-gradient(
+        var(--accent) 0deg,
+        var(--accent-2) 0deg,
+        #202838 0deg,
+        #202838 360deg
+    );
+    position:relative;
+}
+
+.donut::after{
+    content:"";
+    position:absolute;
+    inset:11px;
+    border-radius:50%;
+    background:#0e141f;
+}
+
+.donut-content{
+    position:relative;
+    z-index:2;
+    text-align:center;
+}
+
+.donut-percent{
+    font-size:22px;
+    font-weight:900;
+}
+
+.donut-label{
+    color:var(--muted);
+    font-size:9px;
+}
+
+.goal-info{
+    min-width:0;
+}
+
+.goal-current{
+    font-size:30px;
+    font-weight:900;
+    letter-spacing:-1px;
+}
+
+.goal-target{
+    color:var(--muted);
+    font-size:11px;
+    margin-top:4px;
+}
+
+.progress{
+    height:8px;
+    width:100%;
+    background:#080d15;
+    border-radius:99px;
+    overflow:hidden;
+    margin-top:18px;
+}
+
+.progress-fill{
+    height:100%;
+    width:0;
+    border-radius:99px;
+    background:linear-gradient(90deg,var(--accent),var(--accent-2));
+    transition:.7s cubic-bezier(.2,.8,.2,1);
+}
+
+/* =========================================================
+   ACTIVITY
+========================================================= */
+
+.activity{
+    display:flex;
+    flex-direction:column;
+}
+
+.activity-row{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:12px 0;
+    border-bottom:1px solid rgba(255,255,255,.045);
+}
+
+.activity-row:last-child{
+    border-bottom:0;
+}
+
+.activity-icon{
+    width:36px;
+    height:36px;
+    display:grid;
+    place-items:center;
+    border-radius:10px;
+    background:var(--green-soft);
+}
+
+.activity-info{
+    flex:1;
+    min-width:0;
+}
+
+.activity-name{
+    font-size:12px;
+    font-weight:800;
+}
+
+.activity-meta{
+    color:var(--muted);
+    font-size:10px;
+    margin-top:3px;
+}
+
+.activity-profit{
+    color:var(--green);
+    font-size:12px;
+    font-weight:900;
+}
+
+/* =========================================================
+   QUICK STATS
+========================================================= */
+
+.mini-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+}
+
+.mini{
+    padding:15px;
+    border:1px solid var(--border);
+    border-radius:13px;
+    background:rgba(255,255,255,.025);
+}
+
+.mini-label{
+    color:var(--muted);
+    font-size:10px;
+}
+
+.mini-value{
+    font-size:18px;
+    font-weight:900;
+    margin-top:5px;
+}
+
+/* =========================================================
+   FORMS
+========================================================= */
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+}
+
+.field{
+    display:flex;
+    flex-direction:column;
+    gap:7px;
+}
+
+.field.full{
+    grid-column:1/-1;
+}
+
+.field label{
+    color:#98a2b5;
+    font-size:11px;
+    font-weight:700;
+}
+
+.field input,
+.field select,
+.field textarea{
+    width:100%;
+    border:1px solid var(--border);
+    outline:none;
+    color:#fff;
+    background:#080d15;
+    border-radius:11px;
+    padding:12px 13px;
+    transition:.2s;
+}
+
+.field input,
+.field select{
+    height:45px;
+}
+
+.field textarea{
+    resize:vertical;
+    min-height:100px;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus{
+    border-color:var(--accent);
+    box-shadow:0 0 0 4px var(--accent-soft);
+}
+
+.input-prefix{
+    position:relative;
+}
+
+.input-prefix span{
+    position:absolute;
+    left:13px;
+    top:50%;
+    transform:translateY(-50%);
+    color:var(--muted);
+    font-size:12px;
+}
+
+.input-prefix input{
+    padding-left:30px;
+}
+
+.preview-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+    margin-top:18px;
+}
+
+.preview{
+    border:1px solid var(--border);
+    border-radius:12px;
+    background:rgba(255,255,255,.025);
+    padding:14px;
+}
+
+.preview-label{
+    color:var(--muted);
+    font-size:9px;
+    text-transform:uppercase;
+    font-weight:800;
+}
+
+.preview-value{
+    font-size:16px;
+    font-weight:900;
+    margin-top:5px;
+}
+
+/* =========================================================
+   TOOLBAR
+========================================================= */
+
+.toolbar{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    margin-bottom:16px;
+    flex-wrap:wrap;
+}
+
+.search-box{
+    flex:1;
+    min-width:220px;
+    height:43px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    border:1px solid var(--border);
+    background:#080d15;
+    border-radius:11px;
+    padding:0 13px;
+}
+
+.search-box input{
+    flex:1;
+    min-width:0;
+    border:0;
+    outline:0;
+    background:transparent;
+    color:#fff;
+    font-size:12px;
+}
+
+.toolbar select{
+    height:43px;
+    border:1px solid var(--border);
+    background:#080d15;
+    color:#fff;
+    border-radius:11px;
+    padding:0 12px;
+    outline:none;
+    font-size:11px;
+}
+
+/* =========================================================
+   ITEMS
+========================================================= */
+
+.items-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+}
+
+.item{
+    overflow:hidden;
+    border:1px solid var(--border);
+    background:#0d131f;
+    border-radius:16px;
+    transition:.22s;
+}
+
+.item:hover{
+    transform:translateY(-4px);
+    border-color:var(--border-hover);
+    box-shadow:0 20px 45px rgba(0,0,0,.22);
+}
+
+.item-image{
+    position:relative;
+    aspect-ratio:1/1;
+    background:
+        linear-gradient(135deg,#111a2a,#080d15);
+    overflow:hidden;
+}
+
+.item-image img{
+    width:100%;
+    height:100%;
+    display:block;
+    object-fit:cover;
+}
+
+.item-placeholder{
+    width:100%;
+    height:100%;
+    display:grid;
+    place-items:center;
+    font-size:42px;
+}
+
+.item-status{
+    position:absolute;
+    top:10px;
+    left:10px;
+    padding:6px 8px;
+    border-radius:7px;
+    font-size:9px;
+    font-weight:900;
+    backdrop-filter:blur(8px);
+}
+
+.status-bought{
+    color:#69a7ff;
+    background:rgba(79,140,255,.16);
+}
+
+.status-listed{
+    color:var(--yellow);
+    background:rgba(255,200,87,.15);
+}
+
+.status-sold{
+    color:var(--green);
+    background:rgba(36,212,123,.15);
+}
+
+.item-menu{
+    position:absolute;
+    top:9px;
+    right:9px;
+}
+
+.item-menu button{
+    width:31px;
+    height:31px;
+    border:1px solid rgba(255,255,255,.1);
+    background:rgba(0,0,0,.42);
+    color:white;
+    border-radius:8px;
+    backdrop-filter:blur(8px);
+}
+
+.item-body{
+    padding:15px;
+}
+
+.item-brand{
+    font-size:14px;
+    font-weight:900;
+}
+
+.item-category{
+    color:var(--muted);
+    font-size:10px;
+    margin-top:4px;
+}
+
+.item-price-row{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    margin-top:15px;
+}
+
+.item-price-label{
+    color:var(--muted);
+    font-size:8px;
+    text-transform:uppercase;
+}
+
+.item-price{
+    font-size:13px;
+    font-weight:900;
+    margin-top:3px;
+}
+
+.item-profit{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:13px;
+    padding-top:12px;
+    border-top:1px solid rgba(255,255,255,.045);
+}
+
+.item-profit span{
+    color:var(--muted);
+    font-size:9px;
+}
+
+.item-profit strong{
+    color:var(--green);
+    font-size:12px;
+}
+
+.item-actions{
+    display:flex;
+    gap:7px;
+    margin-top:12px;
+}
+
+.item-actions button{
+    flex:1;
+    height:34px;
+    border-radius:9px;
+    border:1px solid var(--border);
+    background:rgba(255,255,255,.035);
+    color:white;
+    font-size:10px;
+    font-weight:800;
+}
+
+.item-actions .main-action{
+    background:var(--green-soft);
+    color:var(--green);
+    border-color:rgba(36,212,123,.13);
+}
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+.table-wrap{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:700px;
+}
+
+th{
+    color:#606c80;
+    font-size:9px;
+    text-transform:uppercase;
+    text-align:left;
+    padding:12px;
+    border-bottom:1px solid var(--border);
+}
+
+td{
+    padding:13px 12px;
+    border-bottom:1px solid rgba(255,255,255,.045);
+    font-size:11px;
+}
+
+tbody tr{
+    transition:.15s;
+}
+
+tbody tr:hover{
+    background:rgba(255,255,255,.025);
+}
+
+.badge{
+    display:inline-flex;
+    align-items:center;
+    padding:5px 7px;
+    border-radius:6px;
+    font-size:9px;
+    font-weight:900;
+}
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.empty{
+    padding:55px 20px;
+    text-align:center;
+    color:var(--muted);
+}
+
+.empty-icon{
+    font-size:42px;
+    margin-bottom:12px;
+}
+
+.empty strong{
+    display:block;
+    color:#fff;
+    margin-bottom:5px;
+}
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.modal-bg{
+    position:fixed;
+    inset:0;
+    z-index:500;
+    display:grid;
+    place-items:center;
+    padding:20px;
+    background:rgba(0,0,0,.72);
+    backdrop-filter:blur(10px);
+}
+
+.modal{
+    width:650px;
+    max-width:100%;
+    max-height:90vh;
+    overflow:auto;
+    background:#0d1421;
+    border:1px solid var(--border);
+    border-radius:21px;
+    box-shadow:var(--shadow);
+    padding:23px;
+    animation:modalIn .2s ease;
+}
+
+@keyframes modalIn{
+    from{
+        opacity:0;
+        transform:scale(.96) translateY(8px);
+    }
+    to{
+        opacity:1;
+        transform:none;
+    }
+}
+
+.modal-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:20px;
+}
+
+.modal-head h2{
+    font-size:17px;
+}
+
+.close{
+    width:35px;
+    height:35px;
+    border:1px solid var(--border);
+    background:rgba(255,255,255,.045);
+    color:#fff;
+    border-radius:9px;
+}
+
+/* =========================================================
+   COMMAND PALETTE
+========================================================= */
+
+.command{
+    width:600px;
+}
+
+.command-search{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    height:50px;
+    border:1px solid var(--border);
+    background:#080d15;
+    border-radius:12px;
+    padding:0 14px;
+}
+
+.command-search input{
+    flex:1;
+    background:transparent;
+    border:0;
+    outline:0;
+    color:white;
+}
+
+.command-list{
+    margin-top:10px;
+}
+
+.command-item{
+    width:100%;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    border:0;
+    background:transparent;
+    color:#fff;
+    padding:12px;
+    border-radius:9px;
+    text-align:left;
+}
+
+.command-item:hover{
+    background:rgba(255,255,255,.06);
+}
+
+.command-item small{
+    margin-left:auto;
+    color:var(--muted);
+}
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+.toast{
+    position:fixed;
+    right:22px;
+    bottom:22px;
+    z-index:1000;
+    min-width:280px;
+    max-width:calc(100vw - 44px);
+    padding:14px 16px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    border:1px solid var(--border);
+    background:#111927;
+    box-shadow:var(--shadow);
+    border-radius:12px;
+    transform:translateY(25px);
+    opacity:0;
+    pointer-events:none;
+    transition:.3s;
+    font-size:12px;
+    font-weight:700;
+}
+
+.toast.show{
+    transform:none;
+    opacity:1;
+}
+
+/* =========================================================
+   THEME
+========================================================= */
+
+.theme-grid{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:9px;
+}
+
+.theme{
+    padding:14px 8px;
+    border:1px solid var(--border);
+    background:rgba(255,255,255,.03);
+    color:#fff;
+    border-radius:10px;
+    font-size:11px;
+    font-weight:700;
+}
+
+.theme:hover{
+    border-color:var(--accent);
+}
+
+/* =========================================================
+   STATISTICS
+========================================================= */
+
+.stat-big{
+    font-size:34px;
+    font-weight:900;
+    letter-spacing:-1.5px;
+}
+
+.analytics-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:13px;
+}
+
+.analytics-card{
+    padding:17px;
+    border:1px solid var(--border);
+    border-radius:14px;
+    background:rgba(255,255,255,.025);
+}
+
+.analytics-card .label{
+    color:var(--muted);
+    font-size:10px;
+}
+
+.analytics-card .value{
+    font-size:21px;
+    font-weight:900;
+    margin-top:7px;
+}
+
+/* =========================================================
+   MOBILE NAV
+========================================================= */
+
+.mobile-nav{
+    display:none;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:1400px){
+
+    .kpi-grid{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+    .items-grid{
+        grid-template-columns:repeat(3,1fr);
+    }
+}
+
+@media(max-width:1100px){
+
+    .dashboard-grid{
+        grid-template-columns:1fr;
+    }
+
+    .dashboard-grid-2{
+        grid-template-columns:1fr;
+    }
+
+    .items-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:850px){
+
+    :root{
+        --sidebar:72px;
+    }
+
+    .sidebar{
+        padding:15px 8px;
+    }
+
+    .nav-label,
+    .nav-btn span:not(.nav-icon),
+    .nav-count,
+    .sidebar-bottom{
+        display:none;
+    }
+
+    .nav-btn{
+        justify-content:center;
+    }
+
+    .top-search,
+    .user-name{
+        display:none;
+    }
+
+    .main{
+        padding:22px 18px;
+    }
+
+    .preview-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:620px){
+
+    :root{
+        --topbar:64px;
+    }
+
+    .topbar{
+        height:64px;
+        padding:0 13px;
+    }
+
+    .brand-name{
+        display:none;
+    }
+
+    .layout{
+        padding-bottom:74px;
+    }
+
+    .sidebar{
+        display:none;
+    }
+
+    .main{
+        width:100%;
+        margin-left:0;
+        padding:18px 14px 90px;
+    }
+
+    .mobile-nav{
+        position:fixed;
+        left:10px;
+        right:10px;
+        bottom:10px;
+        z-index:200;
+        height:62px;
+        display:flex;
+        align-items:center;
+        justify-content:space-around;
+        border:1px solid var(--border);
+        background:rgba(10,14,23,.94);
+        backdrop-filter:blur(20px);
+        border-radius:17px;
+        box-shadow:var(--shadow);
+    }
+
+    .mobile-nav button{
+        width:54px;
+        height:50px;
+        border:0;
+        background:transparent;
+        color:#758096;
+        border-radius:12px;
+        font-size:18px;
+    }
+
+    .mobile-nav button.active{
+        color:#fff;
+        background:var(--accent-soft);
+    }
+
+    .page-head{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .page-head h1{
+        font-size:25px;
+    }
+
+    .kpi-grid{
+        grid-template-columns:repeat(2,1fr);
+        gap:9px;
+    }
+
+    .kpi{
+        min-height:115px;
+        padding:13px;
+    }
+
+    .kpi-value{
+        font-size:18px;
+    }
+
+    .kpi-label{
+        font-size:8px;
+    }
+
+    .goal-hero{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .field.full{
+        grid-column:auto;
+    }
+
+    .items-grid{
+        grid-template-columns:1fr;
+    }
+
+    .toolbar{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .search-box{
+        width:100%;
+    }
+
+    .toolbar select{
+        width:100%;
+    }
+
+    .preview-grid,
+    .analytics-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .theme-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .modal{
+        padding:18px;
+    }
+
+    .chart-area{
+        height:240px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================================================
+     LOGIN
+========================================================= -->
+
+<div id="loginScreen" class="login-screen">
+
+    <div class="login-glow"></div>
+
+    <div class="login-box">
+
+        <div class="login-logo">💎</div>
+
+        <h1>LUMP <span style="color:var(--accent)">PRO</span></h1>
+
+        <div class="subtitle">
+            Ultimate Reselling Operating System
+        </div>
+
+        <div class="login-field">
+            <input
+                id="accessCode"
+                type="password"
+                placeholder="Wpisz kod dostępu"
+                autocomplete="off">
+        </div>
+
+        <button class="login-btn" onclick="login()">
+            WEJDŹ DO LUMP PRO →
+        </button>
+
+        <div class="login-hint">
+            Domyślny kod: <b>1234</b>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =========================================================
+     APP
+========================================================= -->
+
+<div id="app" class="hidden">
+
+    <header class="topbar">
+
+        <div class="brand">
+
+            <div class="brand-icon">💎</div>
+
+            <div class="brand-name">
+                LUMP <span class="brand-pro">PRO</span>
+            </div>
+
+        </div>
+
+        <div class="top-right">
+
+            <button class="top-search" onclick="openCommand()">
+                <span>⌕</span>
+                <span>Szybkie wyszukiwanie...</span>
+                <kbd>CTRL K</kbd>
+            </button>
+
+            <button class="icon-btn" onclick="showPage('add')" title="Dodaj">
+                ＋
+            </button>
+
+            <button class="icon-btn" onclick="openSettings()" title="Ustawienia">
+                ⚙
+            </button>
+
+            <div class="user-pill">
+                <div class="avatar">LP</div>
+                <div class="user-name">LUMP USER</div>
+            </div>
+
+        </div>
+
+    </header>
+
+    <div class="layout">
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+            <div class="nav-section">
+
+                <div class="nav-label">Workspace</div>
+
+                <button class="nav-btn active"
+                        data-page="dashboard"
+                        onclick="showPage('dashboard')">
+                    <span class="nav-icon">◈</span>
+                    <span>Dashboard</span>
+                </button>
+
+                <button class="nav-btn"
+                        data-page="add"
+                        onclick="showPage('add')">
+                    <span class="nav-icon">＋</span>
+                    <span>Dodaj produkt</span>
+                </button>
+
+                <button class="nav-btn"
+                        data-page="inventory"
+                        onclick="showPage('inventory')">
+                    <span class="nav-icon">▣</span>
+                    <span>Inventory</span>
+                    <span id="inventoryCount" class="nav-count">0</span>
+                </button>
+
+            </div>
+
+            <div class="nav-section">
+
+                <div class="nav-label">Sprzedaż</div>
+
+                <button class="nav-btn"
+                        data-page="bought"
+                        onclick="showPage('bought')">
+                    <span class="nav-icon">🛍</span>
+                    <span>Kupione</span>
+                </button>
+
+                <button class="nav-btn"
+                        data-page="listed"
+                        onclick="showPage('listed')">
+                    <span class="nav-icon">◉</span>
+                    <span>Wystawione</span>
+                </button>
+
+                <button class="nav-btn"
+                        data-page="sold"
+                        onclick="showPage('sold')">
+                    <span class="nav-icon">↗</span>
+                    <span>Sprzedane</span>
+                </button>
+
+            </div>
+
+            <div class="nav-section">
+
+                <div class="nav-label">Analytics</div>
+
+                <button class="nav-btn"
+                        data-page="goals"
+                        onclick="showPage('goals')">
+                    <span class="nav-icon">◎</span>
+                    <span>Cele</span>
+                </button>
+
+                <button class="nav-btn"
+                        data-page="stats"
+                        onclick="showPage('stats')">
+                    <span class="nav-icon">⌁</span>
+                    <span>Statystyki</span>
+                </button>
+
+            </div>
+
+            <div class="sidebar-bottom">
+
+                <button class="nav-btn"
+                        onclick="openSettings()">
+                    <span class="nav-icon">⚙</span>
+                    <span>Ustawienia</span>
+                </button>
+
+            </div>
+
+        </aside>
+
+        <!-- MAIN -->
+
+        <main class="main">
+
+            <!-- =================================================
+                 DASHBOARD
+            ================================================= -->
+
+            <section id="page-dashboard" class="page">
+
+                <div class="page-head">
+
+                    <div>
+
+                        <div class="eyebrow">
+                            ● LIVE OVERVIEW
+                        </div>
+
+                        <h1>Witaj ponownie 👋</h1>
+
+                        <p>
+                            Wszystko, co musisz wiedzieć o swoim resellingu.
+                        </p>
+
+                    </div>
+
+                    <button class="primary"
+                            onclick="showPage('add')">
+                        ＋ DODAJ PRODUKT
+                    </button>
+
+                </div>
+
+                <div class="kpi-grid">
+
+                    <div class="kpi">
+
+                        <div class="kpi-top">
+                            <div class="kpi-icon">💸</div>
+                            <div class="kpi-trend">INVESTMENT</div>
+                        </div>
+
+                        <div class="kpi-label">Łącznie wydane</div>
+                        <div id="kpiSpent" class="kpi-value">0 zł</div>
+
+                    </div>
+
+                    <div class="kpi">
+
+                        <div class="kpi-top">
+                            <div class="kpi-icon">📦</div>
+                            <div class="kpi-trend blue">INVENTORY</div>
+                        </div>
+
+                        <div class="kpi-label">Wartość inventory</div>
+                        <div id="kpiInventory" class="kpi-value blue">0 zł</div>
+
+                    </div>
+
+                    <div class="kpi">
+
+                        <div class="kpi-top">
+                            <div class="kpi-icon">🎯</div>
+                            <div class="kpi-trend green">POTENTIAL</div>
+                        </div>
+
+                        <div class="kpi-label">Potencjalny zysk</div>
+                        <div id="kpiPotential" class="kpi-value green">0 zł</div>
+
+                    </div>
+
+                    <div class="kpi">
+
+                        <div class="kpi-top">
+                            <div class="kpi-icon">💰</div>
+                            <div class="kpi-trend green">REALIZED</div>
+                        </div>
+
+                        <div class="kpi-label">Realny zysk</div>
+                        <div id="kpiProfit" class="kpi-value green">0 zł</div>
+
+                    </div>
+
+                    <div class="kpi">
+
+                        <div class="kpi-top">
+                            <div class="kpi-icon">📈</div>
+                            <div class="kpi-trend yellow">PERFORMANCE</div>
+                        </div>
+
+                        <div class="kpi-label">ROI</div>
+                        <div id="kpiROI" class="kpi-value yellow">0%</div>
+
+                    </div>
+
+                    <div class="kpi">
+
+                        <div class="kpi-top">
+                            <div class="kpi-icon">🔥</div>
+                            <div class="kpi-trend cyan">SOLD</div>
+                        </div>
+
+                        <div class="kpi-label">Sprzedane sztuki</div>
+                        <div id="kpiSold" class="kpi-value cyan">0</div>
+
+                    </div>
+
+                </div>
+
+                <div class="dashboard-grid">
+
+                    <div class="card">
+
+                        <div class="card-head">
+
+                            <div>
+                                <div class="card-title">
+                                    Wynik sprzedaży
+                                </div>
+
+                                <div class="card-subtitle">
+                                    Realny zysk z ostatnich 14 dni
+                                </div>
+                            </div>
+
+                            <div id="chartTotal"
+                                 class="card-action">
+                                0 zł
+                            </div>
+
+                        </div>
+
+                        <div class="chart-area">
+
+                            <div class="chart-grid">
+                                <div class="chart-grid-line"></div>
+                                <div class="chart-grid-line"></div>
+                                <div class="chart-grid-line"></div>
+                                <div class="chart-grid-line"></div>
+                                <div class="chart-grid-line"></div>
+                            </div>
+
+                            <div id="chartBars"
+                                 class="chart-bars"></div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="card">
+
+                        <div class="card-head">
+
+                            <div>
+                                <div class="card-title">
+                                    Cel miesięczny
+                                </div>
+
+                                <div class="card-subtitle">
+                                    Twój aktualny progress
+                                </div>
+                            </div>
+
+                            <button class="secondary"
+                                    onclick="showPage('goals')">
+                                Edytuj
+                            </button>
+
+                        </div>
+
+                        <div class="goal-hero">
+
+                            <div id="goalDonut"
+                                 class="donut">
+
+                                <div class="donut-content">
+
+                                    <div id="goalPercent"
+                                         class="donut-percent">
+                                        0%
+                                    </div>
+
+                                    <div class="donut-label">
+                                        CEL
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="goal-info">
+
+                                <div id="goalCurrent"
+                                     class="goal-current">
+                                    0 zł
+                                </div>
+
+                                <div class="goal-target">
+                                    z <span id="goalTarget">0 zł</span>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="progress">
+                            <div id="goalProgress"
+                                 class="progress-fill"></div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="dashboard-grid-2">
+
+                    <div class="card">
+
+                        <div class="card-head">
+
+                            <div>
+                                <div class="card-title">
+                                    Ostatnie sprzedaże
+                                </div>
+
+                                <div class="card-subtitle">
+                                    Najnowsza aktywność
+                                </div>
+                            </div>
+
+                            <button class="secondary"
+                                    onclick="showPage('sold')">
+                                Wszystkie
+                            </button>
+
+                        </div>
+
+                        <div id="recentSales"
+                             class="activity"></div>
+
+                    </div>
+
+                    <div class="card">
+
+                        <div class="card-head">
+
+                            <div>
+                                <div class="card-title">
+                                    Szybki przegląd
+                                </div>
+
+                                <div class="card-subtitle">
+                                    Stan Twojego biznesu
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="mini-grid">
+
+                            <div class="mini">
+                                <div class="mini-label">
+                                    KUPIONE
+                                </div>
+                                <div id="quickBought"
+                                     class="mini-value">
+                                    0
+                                </div>
+                            </div>
+
+                            <div class="mini">
+                                <div class="mini-label">
+                                    WYSTAWIONE
+                                </div>
+                                <div id="quickListed"
+                                     class="mini-value yellow">
+                                    0
+                                </div>
+                            </div>
+
+                            <div class="mini">
+                                <div class="mini-label">
+                                    SPRZEDANE
+                                </div>
+                                <div id="quickSold"
+                                     class="mini-value green">
+                                    0
+                                </div>
+                            </div>
+
+                            <div class="mini">
+                                <div class="mini-label">
+                                    ŚREDNI ZYSK
+                                </div>
+                                <div id="quickAvg"
+                                     class="mini-value green">
+                                    0 zł
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- =================================================
+                 ADD
+            ================================================= -->
+
+            <section id="page-add" class="page hidden">
+
+                <div class="page-head">
+
+                    <div>
+
+                        <div class="eyebrow">
+                            INVENTORY
+                        </div>
+
+                        <h1>Dodaj produkt</h1>
+
+                        <p>
+                            Dodaj zakupiony produkt i od razu zobacz jego potencjał.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="card">
+
+                    <div class="card-head">
+
+                        <div>
+                            <div class="card-title">
+                                Informacje o produkcie
+                            </div>
+
+                            <div class="card-subtitle">
+                                Pola oznaczone * są wymagane.
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-grid">
+
+                        <div class="field full">
+
+                            <label>
+                                URL zdjęcia
+                            </label>
+
+                            <input id="itemImage"
+                                   type="url"
+                                   placeholder="https://images...">
+
+                        </div>
+
+                        <div class="field">
+
+                            <label>Marka *</label>
+
+                            <input id="itemBrand"
+                                   placeholder="np. Nike">
+
+                        </div>
+
+                        <div class="field">
+
+                            <label>Kategoria</label>
+
+                            <select id="itemCategory">
+
+                                <option>Koszulka</option>
+                                <option>Bluza</option>
+                                <option>Spodnie</option>
+                                <option>Buty</option>
+                                <option>Kurtka</option>
+                                <option>Vintage</option>
+                                <option>Akcesoria</option>
+                                <option>Inne</option>
+
+                            </select>
+
+                        </div>
+
+                        <div class="field">
+
+                            <label>Ilość *</label>
+
+                            <input id="itemQuantity"
+                                   type="number"
+                                   min="1"
+                                   value="1"
+                                   oninput="calculatePreview()">
+
+                        </div>
+
+                        <div class="field">
+
+                            <label>Cena zakupu / szt. *</label>
+
+                            <div class="input-prefix">
+
+                                <span>zł</span>
+
+                                <input id="itemBuy"
+                                       type="number"
+                                       min="0"
+                                       step=".01"
+                                       placeholder="25"
+                                       oninput="calculatePreview()">
+
+                            </div>
+
+                        </div>
+
+                        <div class="field">
+
+                            <label>Cena sprzedaży / szt. *</label>
+
+                            <div class="input-prefix">
+
+                                <span>zł</span>
+
+                                <input id="itemSell"
+                                       type="number"
+                                       min="0"
+                                       step=".01"
+                                       placeholder="90"
+                                       oninput="calculatePreview()">
+
+                            </div>
+
+                        </div>
+
+                        <div class="field">
+
+                            <label>Dodatkowe koszty</label>
+
+                            <div class="input-prefix">
+
+                                <span>zł</span>
+
+                                <input id="itemCosts"
+                                       type="number"
+                                       min="0"
+                                       step=".01"
+                                       value="0"
+                                       oninput="calculatePreview()">
+
+                            </div>
+
+                        </div>
+
+                        <div class="field">
+
+                            <label>Minimalny oczekiwany zysk</label>
+
+                            <div class="input-prefix">
+
+                                <span>zł</span>
+
+                                <input id="itemMinProfit"
+                                       type="number"
+                                       min="0"
+                                       step=".01"
+                                       value="0">
+
+                            </div>
+
+                        </div>
+
+                        <div class="field full">
+
+                            <label>Notatka</label>
+
+                            <textarea id="itemNote"
+                                      placeholder="Np. stan 9/10, kupione na Vinted..."></textarea>
+
+                        </div>
+
+                    </div>
+
+                    <div class="preview-grid">
+
+                        <div class="preview">
+
+                            <div class="preview-label">
+                                Zysk / szt.
+                            </div>
+
+                            <div id="previewProfit"
+                                 class="preview-value green">
+                                0 zł
+                            </div>
+
+                        </div>
+
+                        <div class="preview">
+
+                            <div class="preview-label">
+                                ROI
+                            </div>
+
+                            <div id="previewROI"
+                                 class="preview-value yellow">
+                                0%
+                            </div>
+
+                        </div>
+
+                        <div class="preview">
+
+                            <div class="preview-label">
+                                Łączny koszt
+                            </div>
+
+                            <div id="previewCost"
+                                 class="preview-value">
+                                0 zł
+                            </div>
+
+                        </div>
+
+                        <div class="preview">
+
+                            <div class="preview-label">
+                                Potencjalny zysk
+                            </div>
+
+                            <div id="previewTotalProfit"
+                                 class="preview-value green">
+                                0 zł
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <button class="primary"
+                            style="width:100%;margin-top:18px"
+                            onclick="addItem()">
+                        💎 DODAJ DO INVENTORY
+                    </button>
+
+                </div>
+
+            </section>
+
+            <!-- =================================================
+                 INVENTORY
+            ================================================= -->
+
+            <section id="page-inventory" class="page hidden">
+
+                <div class="page-head">
+
+                    <div>
+
+                        <div class="eyebrow">
+                            INVENTORY
+                        </div>
+
+                        <h1>Wszystkie produkty</h1>
+
+                        <p>
+                            Zarządzaj całym swoim stockiem.
+                        </p>
+
+                    </div>
+
+                    <button class="primary"
+                            onclick="showPage('add')">
+                        ＋ Dodaj
+                    </button>
+
+                </div>
+
+                <div class="card">
+
+                    <div class="toolbar">
+
+                        <div class="search-box">
+
+                            <span>⌕</span>
+
+                            <input id="inventorySearch"
+                                   placeholder="Szukaj marki, kategorii..."
+                                   oninput="renderInventory()">
+
+                        </div>
+
+                        <select id="inventoryCategory"
+                                onchange="renderInventory()">
+
+                            <option value="">Wszystkie kategorie</option>
+                            <option>Koszulka</option>
+                            <option>Bluza</option>
+                            <option>Spodnie</option>
+                            <option>Buty</option>
+                            <option>Kurtka</option>
+                            <option>Vintage</option>
+                            <option>Akcesoria</option>
+                            <option>Inne</option>
+
+                        </select>
+
+                        <select id="inventoryStatus"
+                                onchange="renderInventory()">
+
+                            <option value="">Wszystkie statusy</option>
+                            <option value="bought">Kupione</option>
+                            <option value="listed">Wystawione</option>
+                            <option value="sold">Sprzedane</option>
+
+                        </select>
+
+                        <select id="inventorySort"
+                                onchange="renderInventory()">
+
+                            <option value="newest">Najnowsze</option>
+                            <option value="profit">Największy zysk</option>
+                            <option value="buyLow">Najtańsze</option>
+                            <option value="sellHigh">Najdroższe</option>
+
+                        </select>
+
+                    </div>
+
+                    <div id="itemsGrid"
+                         class="items-grid"></div>
+
+                </div>
+
+            </section>
+
+            <!-- =================================================
+                 BOUGHT
+            ================================================= -->
+
+            <section id="page-bought" class="page hidden">
+
+                <div class="page-head">
+
+                    <div>
+
+                        <div class="eyebrow">
+                            STATUS
+                        </div>
+
+                        <h1>Kupione</h1>
+
+                        <p>
+                            Produkty, których jeszcze nie wystawiłeś.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="card">
+
+                    <div id="boughtGrid"
+                         class="items-grid"></div>
+
+                </div>
+
+            </section>
+
+            <!-- =================================================
+                 LISTED
+            ================================================= -->
+
+            <section id="page-listed" class="page hidden">
+
+                <div class="page-head">
+
+                    <div>
+
+                        <div class="eyebrow">
+                            ACTIVE LISTINGS
+                        </div>
+
+                        <h1>Wystawione</h1>
+
+                        <p>
+                            Produkty oczekujące na kupującego.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="card">
+
+                    <div id="listedGrid"
+                         class="items-grid"></div>
+
+                </div>
+
+            </section>
+
+            <!-- =================================================
+                 SOLD
+            ================================================= -->
+
+            <section id="page-sold" class="page hidden">
+
+                <div class="page-head">
+
+                    <div>
+
+                        <div class="eyebrow">
+                            REVENUE
+                        </div>
+
+                        <h1>Sprzedaż</h1>
+
+                        <p>
+                            Historia wszystkich zakończonych transakcji.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="analytics-grid"
+                     style="margin-bottom:18px">
+
+                    <div class="analytics-card">
+
+                        <div class="label">
+                            SPRZEDANE
+                        </div>
+
+                        <div id="soldCount"
+                             class="value">
+                            0
+                        </div>
+
+                    </div>
+
+                    <div class="analytics-card">
+
+                        <div class="label">
+                            PRZYCHÓD
+                        </div>
+
+                        <div id="soldRevenue"
+                             class="value blue">
+                            0 zł
+                        </div>
+
+                    </div>
+
+                    <div class="analytics-card">
+
+                        <div class="label">
+                            REALNY ZYSK
+                        </div>
+
+                        <div id="soldProfit"
+                             class="value green">
+                            0 zł
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="card">
+
+                    <div id="soldTable"></div>
+
+                </div>
+
+            </section>
+
+            <!-- =================================================
+                 GOALS
+            ================================================= -->
+
+            <section id="page-goals" class="page hidden">
+
+                <div class="page-head">
+
+                    <div>
+
+                        <div class="eyebrow">
+                            TARGETS
+                        </div>
+
+                        <h1>Cele</h1>
+
+                        <p>
+                            Zamień swój cel finansowy w konkretny plan.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="dashboard-grid">
+
+                    <div class="card">
+
+                        <div class="card-head">
+
+                            <div>
+                                <div class="card-title">
+                                    Miesięczny cel
+                                </div>
+
+                                <div class="card-subtitle">
+                                    Ile chcesz zarobić?
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="form-grid">
+
+                            <div class="field full">
+
+                                <label>
+                                    Cel zysku
+                                </label>
+
+                                <input id="goalInput"
+                                       type="number"
+                                       min="0"
+                                       placeholder="5000">
+
+                            </div>
+
+                            <div class="field">
+
+                                <label>
+                                    Średni zysk / szt.
+                                </label>
+
+                                <input id="avgGoalProfit"
+                                       type="number"
+                                       min="0"
+                                       placeholder="75">
+
+                            </div>
+
+                            <div class="field">
+
+                                <label>
+                                    Dni pracy
+                                </label>
+
+                                <input id="workDays"
+                                       type="number"
+                                       min="1"
+                                       max="31"
+                                       value="20">
+
+                            </div>
+
+                        </div>
+
+                        <button class="primary"
+                                style="width:100%;margin-top:18px"
+                                onclick="calculateGoal()">
+                            🚀 ZAPISZ PLAN
+                        </button>
+
+                    </div>
+
+                    <div class="card">
+
+                        <div class="card-head">
+
+                            <div>
+                                <div class="card-title">
+                                    Twój plan
+                                </div>
+
+                                <div class="card-subtitle">
+                                    Konkretne liczby zamiast zgadywania.
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div id="goalPlan"
+                             class="empty">
+                            Ustaw cel, aby zobaczyć plan.
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- =================================================
+                 STATS
+            ================================================= -->
+
+            <section id="page-stats" class="page hidden">
+
+                <div class="page-head">
+
+                    <div>
+
+                        <div class="eyebrow">
+                            BUSINESS INTELLIGENCE
+                        </div>
+
+                        <h1>Statystyki</h1>
+
+                        <p>
+                            Zobacz, jak naprawdę działa Twój reselling.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="analytics-grid">
+
+                    <div class="analytics-card">
+                        <div class="label">PRODUKTY</div>
+                        <div id="statsItems" class="value">0</div>
+                    </div>
+
+                    <div class="analytics-card">
+                        <div class="label">SPRZEDANE</div>
+                        <div id="statsSold" class="value">0</div>
+                    </div>
+
+                    <div class="analytics-card">
+                        <div class="label">ROI</div>
+                        <div id="statsROI"
+                             class="value yellow">
+                            0%
+                        </div>
+                    </div>
+
+                    <div class="analytics-card">
+                        <div class="label">REALNY ZYSK</div>
+                        <div id="statsProfit"
+                             class="value green">
+                            0 zł
+                        </div>
+                    </div>
+
+                    <div class="analytics-card">
+                        <div class="label">ŚREDNI ZYSK</div>
+                        <div id="statsAvgProfit"
+                             class="value green">
+                            0 zł
+                        </div>
+                    </div>
+
+                    <div class="analytics-card">
+                        <div class="label">SELL-THROUGH</div>
+                        <div id="statsSellThrough"
+                             class="value blue">
+                            0%
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="dashboard-grid-2"
+                     style="margin-top:18px">
+
+                    <div class="card">
+
+                        <div class="card-head">
+
+                            <div>
+                                <div class="card-title">
+                                    🏆 Najlepsza sprzedaż
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div id="bestSale"
+                             class="empty">
+                            Brak sprzedaży.
+                        </div>
+
+                    </div>
+
+                    <div class="card">
+
+                        <div class="card-head">
+
+                            <div>
+                                <div class="card-title">
+                                    📅 Wyniki okresowe
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="mini-grid">
+
+                            <div class="mini">
+                                <div class="mini-label">
+                                    DZISIAJ
+                                </div>
+                                <div id="summaryToday"
+                                     class="mini-value green">
+                                    0 zł
+                                </div>
+                            </div>
+
+                            <div class="mini">
+                                <div class="mini-label">
+                                    MIESIĄC
+                                </div>
+                                <div id="summaryMonth"
+                                     class="mini-value green">
+                                    0 zł
+                                </div>
+                            </div>
+
+                            <div class="mini">
+                                <div class="mini-label">
+                                    ROK
+                                </div>
+                                <div id="summaryYear"
+                                     class="mini-value green">
+                                    0 zł
+                                </div>
+                            </div>
+
+                            <div class="mini">
+                                <div class="mini-label">
+                                    ALL TIME
+                                </div>
+                                <div id="summaryAll"
+                                     class="mini-value green">
+                                    0 zł
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+</div>
+
+<!-- MOBILE NAV -->
+
+<nav class="mobile-nav">
+
+    <button data-mobile="dashboard"
+            class="active"
+            onclick="showPage('dashboard')">
+        ◈
+    </button>
+
+    <button data-mobile="inventory"
+            onclick="showPage('inventory')">
+        ▣
+    </button>
+
+    <button data-mobile="add"
+            onclick="showPage('add')">
+        ＋
+    </button>
+
+    <button data-mobile="sold"
+            onclick="showPage('sold')">
+        ↗
+    </button>
+
+    <button data-mobile="stats"
+            onclick="showPage('stats')">
+        ⌁
+    </button>
+
+</nav>
+
+<!-- =========================================================
+     MODAL
+========================================================= -->
+
+<div id="modalBg"
+     class="modal-bg hidden"
+     onclick="if(event.target===this)closeModal()">
+
+    <div id="modal"
+         class="modal">
+
+        <div class="modal-head">
+
+            <h2 id="modalTitle">
+                Ustawienia
+            </h2>
+
+            <button class="close"
+                    onclick="closeModal()">
+                ✕
+            </button>
+
+        </div>
+
+        <div id="modalContent"></div>
+
+    </div>
+
+</div>
+
+<!-- COMMAND -->
+
+<div id="commandBg"
+     class="modal-bg hidden"
+     onclick="if(event.target===this)closeCommand()">
+
+    <div class="modal command">
+
+        <div class="command-search">
+
+            <span>⌕</span>
+
+            <input id="commandInput"
+                   placeholder="Wpisz polecenie..."
+                   oninput="filterCommands()">
+
+            <kbd>ESC</kbd>
+
+        </div>
+
+        <div id="commandList"
+             class="command-list">
+
+            <button class="command-item"
+                    onclick="commandGo('dashboard')">
+                ◈ Dashboard
+                <small>Alt 1</small>
+            </button>
+
+            <button class="command-item"
+                    onclick="commandGo('add')">
+                ＋ Dodaj produkt
+                <small>Alt 2</small>
+            </button>
+
+            <button class="command-item"
+                    onclick="commandGo('inventory')">
+                ▣ Inventory
+                <small>Alt 3</small>
+            </button>
+
+            <button class="command-item"
+                    onclick="commandGo('sold')">
+                ↗ Sprzedaż
+                <small>Alt 4</small>
+            </button>
+
+            <button class="command-item"
+                    onclick="commandGo('stats')">
+                ⌁ Statystyki
+                <small>Alt 5</small>
+            </button>
+
+            <button class="command-item"
+                    onclick="openSettings();closeCommand()">
+                ⚙ Ustawienia
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- TOAST -->
+
+<div id="toast"
+     class="toast">
+    <span id="toastIcon">✓</span>
+    <span id="toastText"></span>
+</div>
+
+<script>
+/* =========================================================
+   LUMP PRO — CORE
+========================================================= */
+
+const STORAGE_KEY = "lump_pro_v2_items";
+const GOAL_KEY = "lump_pro_v2_goal";
+const THEME_KEY = "lump_pro_v2_theme";
+const LOGIN_KEY = "lump_pro_v2_logged";
+
+let items = loadJSON(STORAGE_KEY, []);
+let goal = Number(localStorage.getItem(GOAL_KEY) || 0);
+
+function loadJSON(key, fallback){
+    try{
+        return JSON.parse(localStorage.getItem(key)) ?? fallback;
+    }catch{
+        return fallback;
+    }
+}
+
+function save(){
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+    localStorage.setItem(GOAL_KEY, String(goal));
+}
+
+function money(value){
+    return Number(value || 0).toLocaleString("pl-PL",{
+        minimumFractionDigits:2,
+        maximumFractionDigits:2
+    }) + " zł";
+}
+
+function integer(value){
+    return Number(value || 0).toLocaleString("pl-PL");
+}
+
+function pct(value){
+    return Number(value || 0).toFixed(1) + "%";
+}
+
+function escapeHTML(value){
+    return String(value ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+}
+
+/* =========================================================
+   LOGIN
+========================================================= */
+
+function login(){
+
+    const code =
+        document.getElementById("accessCode").value.trim();
+
+    if(code !== "1234"){
+        toast("Nieprawidłowy kod dostępu.","❌");
+        return;
+    }
+
+    localStorage.setItem(LOGIN_KEY,"1");
+
+    document
+        .getElementById("loginScreen")
+        .classList.add("hidden");
+
+    document
+        .getElementById("app")
+        .classList.remove("hidden");
+
+    updateAll();
+}
+
+document
+    .getElementById("accessCode")
+    .addEventListener("keydown",event=>{
+        if(event.key==="Enter") login();
+    });
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+let toastTimer;
+
+function toast(message,icon="✓"){
+
+    const box =
+        document.getElementById("toast");
+
+    document.getElementById("toastText")
+        .textContent = message;
+
+    document.getElementById("toastIcon")
+        .textContent = icon;
+
+    box.classList.add("show");
+
+    clearTimeout(toastTimer);
+
+    toastTimer = setTimeout(()=>{
+        box.classList.remove("show");
+    },2600);
+}
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+function showPage(page){
+
+    document.querySelectorAll(".page")
+        .forEach(el=>el.classList.add("hidden"));
+
+    const target =
+        document.getElementById("page-"+page);
+
+    if(target){
+        target.classList.remove("hidden");
+    }
+
+    document.querySelectorAll(".nav-btn")
+        .forEach(btn=>{
+            btn.classList.toggle(
+                "active",
+                btn.dataset.page === page
+            );
+        });
+
+    document.querySelectorAll("[data-mobile]")
+        .forEach(btn=>{
+            btn.classList.toggle(
+                "active",
+                btn.dataset.mobile === page
+            );
+        });
+
+    updateAll();
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+}
+
+/* =========================================================
+   ITEM CALCULATOR
+========================================================= */
+
+function calculatePreview(){
+
+    const qty =
+        Number(document.getElementById("itemQuantity")?.value) || 0;
+
+    const buy =
+        Number(document.getElementById("itemBuy")?.value) || 0;
+
+    const sell =
+        Number(document.getElementById("itemSell")?.value) || 0;
+
+    const costs =
+        Number(document.getElementById("itemCosts")?.value) || 0;
+
+    const totalCost =
+        qty * buy + costs;
+
+    const totalRevenue =
+        qty * sell;
+
+    const totalProfit =
+        totalRevenue - totalCost;
+
+    const profitPerItem =
+        qty > 0
+            ? totalProfit / qty
+            : 0;
+
+    const roi =
+        totalCost > 0
+            ? totalProfit / totalCost * 100
+            : 0;
+
+    document.getElementById("previewProfit")
+        .textContent = money(profitPerItem);
+
+    document.getElementById("previewROI")
+        .textContent = pct(roi);
+
+    document.getElementById("previewCost")
+        .textContent = money(totalCost);
+
+    document.getElementById("previewTotalProfit")
+        .textContent = money(totalProfit);
+}
+
+/* =========================================================
+   ADD ITEM
+========================================================= */
+
+function addItem(){
+
+    const brand =
+        document.getElementById("itemBrand")
+        .value.trim();
+
+    const category =
+        document.getElementById("itemCategory").value;
+
+    const quantity =
+        Number(document.getElementById("itemQuantity").value) || 1;
+
+    const buy =
+        Number(document.getElementById("itemBuy").value) || 0;
+
+    const sell =
+        Number(document.getElementById("itemSell").value) || 0;
+
+    const costs =
+        Number(document.getElementById("itemCosts").value) || 0;
+
+    const minProfit =
+        Number(document.getElementById("itemMinProfit").value) || 0;
+
+    const image =
+        document.getElementById("itemImage").value.trim();
+
+    const note =
+        document.getElementById("itemNote").value.trim();
+
+    if(!brand){
+        toast("Podaj markę produktu.","⚠");
+        return;
+    }
+
+    if(buy <= 0 || sell <= 0){
+        toast("Podaj prawidłową cenę zakupu i sprzedaży.","⚠");
+        return;
+    }
+
+    const item = {
+
+        id:
+            Date.now() +
+            Math.random(),
+
+        brand,
+        category,
+        quantity,
+        buy,
+        sell,
+        costs,
+        minProfit,
+        image,
+        note,
+
+        status:"bought",
+
+        createdAt:
+            new Date().toISOString(),
+
+        listedAt:null,
+        soldAt:null,
+        soldPrice:null
+
+    };
+
+    items.unshift(item);
+
+    save();
+
+    clearAddForm();
+
+    toast("Produkt został dodany do inventory.","💎");
+
+    showPage("inventory");
+}
+
+function clearAddForm(){
+
+    [
+        "itemBrand",
+        "itemImage",
+        "itemBuy",
+        "itemSell",
+        "itemNote"
+    ].forEach(id=>{
+        document.getElementById(id).value="";
+    });
+
+    document.getElementById("itemQuantity").value=1;
+    document.getElementById("itemCosts").value=0;
+    document.getElementById("itemMinProfit").value=0;
+
+    calculatePreview();
+}
+
+/* =========================================================
+   ITEM CALCULATIONS
+========================================================= */
+
+function itemCost(item){
+    return item.quantity * item.buy + item.costs;
+}
+
+function itemPotentialRevenue(item){
+    return item.quantity * item.sell;
+}
+
+function itemPotentialProfit(item){
+    return itemPotentialRevenue(item) - itemCost(item);
+}
+
+function itemRealProfit(item){
+    return Number(item.soldPrice || 0) - itemCost(item);
+}
+
+/* =========================================================
+   ITEM CARD
+========================================================= */
+
+function statusData(status){
+
+    if(status==="bought"){
+        return {
+            label:"KUPIONE",
+            cls:"status-bought"
+        };
+    }
+
+    if(status==="listed"){
+        return {
+            label:"WYSTAWIONE",
+            cls:"status-listed"
+        };
+    }
+
+    return {
+        label:"SPRZEDANE",
+        cls:"status-sold"
+    };
+}
+
+function itemCard(item){
+
+    const status =
+        statusData(item.status);
+
+    const profit =
+        item.status === "sold"
+            ? itemRealProfit(item)
+            : itemPotentialProfit(item);
+
+    let imageHTML;
+
+    if(item.image){
+
+        imageHTML = `
+            <img
+                src="${escapeHTML(item.image)}"
+                alt="${escapeHTML(item.brand)}"
+                onerror="this.style.display='none';this.nextElementSibling.style.display='grid'">
+
+            <div class="item-placeholder"
+                 style="display:none">
+                👕
+            </div>
+        `;
+
+    }else{
+
+        imageHTML = `
+            <div class="item-placeholder">
+                👕
+            </div>
+        `;
+
+    }
+
+    let action = "";
+
+    if(item.status === "bought"){
+
+        action = `
+            <button
+                class="main-action"
+                onclick="listItem('${item.id}')">
+                ◉ Wystaw
+            </button>
+        `;
+
+    }else if(item.status === "listed"){
+
+        action = `
+            <button
+                class="main-action"
+                onclick="openSellModal('${item.id}')">
+                ↗ Sprzedaj
+            </button>
+        `;
+
+    }else{
+
+        action = `
+            <button
+                onclick="viewItem('${item.id}')">
+                Szczegóły
+            </button>
+        `;
+
+    }
+
+    return `
+
+        <article class="item">
+
+            <div class="item-image">
+
+                ${imageHTML}
+
+                <div class="item-status ${status.cls}">
+                    ${status.label}
+                </div>
+
+                <div class="item-menu">
+                    <button onclick="openEditModal('${item.id}')">
+                        ⋯
+                    </button>
+                </div>
+
+            </div>
+
+            <div class="item-body">
+
+                <div class="item-brand">
+                    ${escapeHTML(item.brand)}
+                </div>
+
+                <div class="item-category">
+                    ${escapeHTML(item.category)}
+                    · ${integer(item.quantity)} szt.
+                </div>
+
+                <div class="item-price-row">
+
+                    <div>
+                        <div class="item-price-label">
+                            Zakup
+                        </div>
+
+                        <div class="item-price">
+                            ${money(item.buy)}
+                        </div>
+                    </div>
+
+                    <div style="text-align:right">
+
+                        <div class="item-price-label">
+                            Sprzedaż
+                        </div>
+
+                        <div class="item-price">
+                            ${money(
+                                item.status==="sold"
+                                    ? item.soldPrice
+                                    : item.sell
+                            )}
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="item-profit">
+
+                    <span>
+                        ${item.status==="sold"
+                            ? "REALNY ZYSK"
+                            : "POTENCJALNY ZYSK"}
+                    </span>
+
+                    <strong>
+                        ${profit >= 0 ? "+" : ""}
+                        ${money(profit)}
+                    </strong>
+
+                </div>
+
+                <div class="item-actions">
+
+                    ${action}
+
+                    <button
+                        onclick="openEditModal('${item.id}')">
+                        ✎
+                    </button>
+
+                    <button
+                        onclick="deleteItem('${item.id}')">
+                        🗑
+                    </button>
+
+                </div>
+
+            </div>
+
+        </article>
+
+    `;
+}
+
+/* =========================================================
+   INVENTORY
+========================================================= */
+
+function renderInventory(){
+
+    const grid =
+        document.getElementById("itemsGrid");
+
+    if(!grid) return;
+
+    const search =
+        (
+            document.getElementById("inventorySearch")
+                ?.value || ""
+        ).toLowerCase();
+
+    const category =
+        document.getElementById("inventoryCategory")
+            ?.value || "";
+
+    const status =
+        document.getElementById("inventoryStatus")
+            ?.value || "";
+
+    const sort =
+        document.getElementById("inventorySort")
+            ?.value || "newest";
+
+    let filtered =
+        items.filter(item=>{
+
+            const text =
+                `${item.brand} ${item.category} ${item.note}`
+                    .toLowerCase();
+
+            return (
+                text.includes(search) &&
+                (!category || item.category===category) &&
+                (!status || item.status===status)
+            );
+
+        });
+
+    if(sort==="profit"){
+
+        filtered.sort(
+            (a,b)=>
+                itemPotentialProfit(b) -
+                itemPotentialProfit(a)
+        );
+
+    }else if(sort==="buyLow"){
+
+        filtered.sort(
+            (a,b)=>a.buy-b.buy
+        );
+
+    }else if(sort==="sellHigh"){
+
+        filtered.sort(
+            (a,b)=>b.sell-a.sell
+        );
+
+    }else{
+
+        filtered.sort(
+            (a,b)=>
+                new Date(b.createdAt) -
+                new Date(a.createdAt)
+        );
+
+    }
+
+    if(!filtered.length){
+
+        grid.innerHTML = emptyHTML(
+            "📦",
+            "Brak produktów",
+            "Dodaj pierwszy produkt do inventory."
+        );
+
+        return;
+    }
+
+    grid.innerHTML =
+        filtered.map(itemCard).join("");
+}
+
+/* =========================================================
+   SPECIAL LISTS
+========================================================= */
+
+function renderSpecialLists(){
+
+    const bought =
+        items.filter(x=>x.status==="bought");
+
+    const listed =
+        items.filter(x=>x.status==="listed");
+
+    const boughtGrid =
+        document.getElementById("boughtGrid");
+
+    const listedGrid =
+        document.getElementById("listedGrid");
+
+    if(boughtGrid){
+
+        boughtGrid.innerHTML =
+            bought.length
+                ? bought.map(itemCard).join("")
+                : emptyHTML(
+                    "🛍",
+                    "Brak kupionych produktów",
+                    "Wszystko zostało wystawione lub sprzedane."
+                );
+
+    }
+
+    if(listedGrid){
+
+        listedGrid.innerHTML =
+            listed.length
+                ? listed.map(itemCard).join("")
+                : emptyHTML(
+                    "◉",
+                    "Brak aktywnych ofert",
+                    "Wystaw produkt, aby pojawił się tutaj."
+                );
+
+    }
+}
+
+function emptyHTML(icon,title,text){
+
+    return `
+        <div class="empty"
+             style="grid-column:1/-1">
+            <div class="empty-icon">${icon}</div>
+            <strong>${title}</strong>
+            ${text}
+        </div>
+    `;
+}
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+function listItem(id){
+
+    const item =
+        items.find(x=>String(x.id)===String(id));
+
+    if(!item) return;
+
+    item.status="listed";
+    item.listedAt =
+        new Date().toISOString();
+
+    save();
+    updateAll();
+
+    toast("Produkt oznaczony jako wystawiony.","📸");
+}
+
+function openSellModal(id){
+
+    const item =
+        items.find(x=>String(x.id)===String(id));
+
+    if(!item) return;
+
+    document.getElementById("modalTitle")
+        .textContent = "Zarejestruj sprzedaż";
+
+    document.getElementById("modalContent")
+        .innerHTML = `
+
+            <div class="field">
+
+                <label>
+                    Produkt
+                </label>
+
+                <input
+                    value="${escapeHTML(item.brand)} — ${escapeHTML(item.category)}"
+                    disabled>
+
+            </div>
+
+            <div class="field"
+                 style="margin-top:15px">
+
+                <label>
+                    Cena sprzedaży
+                </label>
+
+                <div class="input-prefix">
+
+                    <span>zł</span>
+
+                    <input
+                        id="sellPriceInput"
+                        type="number"
+                        min="0"
+                        step=".01"
+                        value="${item.sell}">
+
+                </div>
+
+            </div>
+
+            <div class="preview-grid">
+
+                <div class="preview">
+
+                    <div class="preview-label">
+                        KOSZT
+                    </div>
+
+                    <div class="preview-value">
+                        ${money(itemCost(item))}
+                    </div>
+
+                </div>
+
+                <div class="preview">
+
+                    <div class="preview-label">
+                        ZYSK
+                    </div>
+
+                    <div id="sellPreviewProfit"
+                         class="preview-value green">
+                        ${money(item.sell-itemCost(item))}
+                    </div>
+
+                </div>
+
+            </div>
+
+            <button
+                class="primary"
+                style="width:100%;margin-top:18px"
+                onclick="confirmSale('${item.id}')">
+                💰 POTWIERDŹ SPRZEDAŻ
+            </button>
+        `;
+
+    document.getElementById("modalBg")
+        .classList.remove("hidden");
+
+    setTimeout(()=>{
+        document
+            .getElementById("sellPriceInput")
+            ?.focus();
+    },50);
+}
+
+function confirmSale(id){
+
+    const item =
+        items.find(x=>String(x.id)===String(id));
+
+    if(!item) return;
+
+    const price =
+        Number(
+            document.getElementById("sellPriceInput")
+                .value
+        );
+
+    if(price<=0){
+        toast("Podaj prawidłową cenę.","⚠");
+        return;
+    }
+
+    item.status="sold";
+    item.soldPrice=price;
+    item.soldAt =
+        new Date().toISOString();
+
+    save();
+    closeModal();
+    updateAll();
+
+    toast(
+        `Sprzedaż ${money(price)} została zapisana.`,
+        "💰"
+    );
+}
+
+/* =========================================================
+   EDIT
+========================================================= */
+
+function openEditModal(id){
+
+    const item =
+        items.find(x=>String(x.id)===String(id));
+
+    if(!item) return;
+
+    document.getElementById("modalTitle")
+        .textContent = "Edytuj produkt";
+
+    document.getElementById("modalContent")
+        .innerHTML = `
+
+            <div class="form-grid">
+
+                <div class="field">
+
+                    <label>Marka</label>
+
+                    <input
+                        id="editBrand"
+                        value="${escapeHTML(item.brand)}">
+
+                </div>
+
+                <div class="field">
+
+                    <label>Kategoria</label>
+
+                    <select id="editCategory">
+
+                        ${[
+                            "Koszulka",
+                            "Bluza",
+                            "Spodnie",
+                            "Buty",
+                            "Kurtka",
+                            "Vintage",
+                            "Akcesoria",
+                            "Inne"
+                        ].map(cat=>`
+                            <option
+                                ${item.category===cat?"selected":""}>
+                                ${cat}
+                            </option>
+                        `).join("")}
+
+                    </select>
+
+                </div>
+
+                <div class="field">
+
+                    <label>Ilość</label>
+
+                    <input
+                        id="editQuantity"
+                        type="number"
+                        min="1"
+                        value="${item.quantity}">
+
+                </div>
+
+                <div class="field">
+
+                    <label>Cena zakupu</label>
+
+                    <input
+                        id="editBuy"
+                        type="number"
+                        step=".01"
+                        value="${item.buy}">
+
+                </div>
+
+                <div class="field">
+
+                    <label>Cena sprzedaży</label>
+
+                    <input
+                        id="editSell"
+                        type="number"
+                        step=".01"
+                        value="${item.sell}">
+
+                </div>
+
+                <div class="field">
+
+                    <label>Dodatkowe koszty</label>
+
+                    <input
+                        id="editCosts"
+                        type="number"
+                        step=".01"
+                        value="${item.costs}">
+
+                </div>
+
+                <div class="field full">
+
+                    <label>Zdjęcie</label>
+
+                    <input
+                        id="editImage"
+                        value="${escapeHTML(item.image || "")}">
+
+                </div>
+
+                <div class="field full">
+
+                    <label>Notatka</label>
+
+                    <textarea id="editNote">${escapeHTML(item.note || "")}</textarea>
+
+                </div>
+
+            </div>
+
+            <button
+                class="primary"
+                style="width:100%;margin-top:18px"
+                onclick="saveEdit('${item.id}')">
+                ZAPISZ ZMIANY
+            </button>
+        `;
+
+    document.getElementById("modalBg")
+        .classList.remove("hidden");
+}
+
+function saveEdit(id){
+
+    const item =
+        items.find(x=>String(x.id)===String(id));
+
+    if(!item) return;
+
+    item.brand =
+        document.getElementById("editBrand").value.trim();
+
+    item.category =
+        document.getElementById("editCategory").value;
+
+    item.quantity =
+        Number(document.getElementById("editQuantity").value) || 1;
+
+    item.buy =
+        Number(document.getElementById("editBuy").value) || 0;
+
+    item.sell =
+        Number(document.getElementById("editSell").value) || 0;
+
+    item.costs =
+        Number(document.getElementById("editCosts").value) || 0;
+
+    item.image =
+        document.getElementById("editImage").value.trim();
+
+    item.note =
+        document.getElementById("editNote").value.trim();
+
+    save();
+    closeModal();
+    updateAll();
+
+    toast("Zmiany zostały zapisane.","✓");
+}
+
+/* =========================================================
+   VIEW ITEM
+========================================================= */
+
+function viewItem(id){
+
+    const item =
+        items.find(x=>String(x.id)===String(id));
+
+    if(!item) return;
+
+    const profit =
+        itemRealProfit(item);
+
+    document.getElementById("modalTitle")
+        .textContent =
+            `${item.brand} — szczegóły`;
+
+    document.getElementById("modalContent")
+        .innerHTML = `
+
+            <div class="preview-grid">
+
+                <div class="preview">
+                    <div class="preview-label">STATUS</div>
+                    <div class="preview-value">
+                        SPRZEDANE
+                    </div>
+                </div>
+
+                <div class="preview">
+                    <div class="preview-label">ZAKUP</div>
+                    <div class="preview-value">
+                        ${money(itemCost(item))}
+                    </div>
+                </div>
+
+                <div class="preview">
+                    <div class="preview-label">SPRZEDAŻ</div>
+                    <div class="preview-value">
+                        ${money(item.soldPrice)}
+                    </div>
+                </div>
+
+                <div class="preview">
+                    <div class="preview-label">ZYSK</div>
+                    <div class="preview-value green">
+                        ${money(profit)}
+                    </div>
+                </div>
+
+            </div>
+
+            ${
+                item.note
+                ?
+                `<div style="
+                    margin-top:18px;
+                    padding:14px;
+                    border:1px solid var(--border);
+                    border-radius:11px;
+                    color:var(--muted);
+                    font-size:12px">
+                    ${escapeHTML(item.note)}
+                </div>`
+                :""
+            }
+        `;
+
+    document.getElementById("modalBg")
+        .classList.remove("hidden");
+}
+
+/* =========================================================
+   DELETE
+========================================================= */
+
+function deleteItem(id){
+
+    const item =
+        items.find(x=>String(x.id)===String(id));
+
+    if(!item) return;
+
+    if(
+        !confirm(
+            `Usunąć "${item.brand}" z inventory?`
+        )
+    ) return;
+
+    items =
+        items.filter(
+            x=>String(x.id)!==String(id)
+        );
+
+    save();
+    updateAll();
+
+    toast("Produkt został usunięty.","🗑");
+}
+
+/* =========================================================
+   STATS ENGINE
+========================================================= */
+
+function calculateStats(){
+
+    const spent =
+        items.reduce(
+            (sum,x)=>sum+itemCost(x),
+            0
+        );
+
+    const active =
+        items.filter(
+            x=>x.status!=="sold"
+        );
+
+    const inventoryValue =
+        active.reduce(
+            (sum,x)=>sum+itemCost(x),
+            0
+        );
+
+    const potentialRevenue =
+        active.reduce(
+            (sum,x)=>sum+itemPotentialRevenue(x),
+            0
+        );
+
+    const potentialProfit =
+        active.reduce(
+            (sum,x)=>sum+itemPotentialProfit(x),
+            0
+        );
+
+    const sold =
+        items.filter(
+            x=>x.status==="sold"
+        );
+
+    const revenue =
+        sold.reduce(
+            (sum,x)=>sum+Number(x.soldPrice||0),
+            0
+        );
+
+    const realProfit =
+        sold.reduce(
+            (sum,x)=>sum+itemRealProfit(x),
+            0
+        );
+
+    const roi =
+        spent > 0
+            ? realProfit / spent * 100
+            : 0;
+
+    const avgProfit =
+        sold.length
+            ? realProfit / sold.length
+            : 0;
+
+    const soldThrough =
+        items.length
+            ? sold.length / items.length * 100
+            : 0;
+
+    return {
+        spent,
+        inventoryValue,
+        potentialRevenue,
+        potentialProfit,
+        soldRevenue:revenue,
+        realProfit,
+        roi,
+        sold,
+        avgProfit,
+        soldThrough
+    };
+}
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+
+function updateDashboard(){
+
+    const s =
+        calculateStats();
+
+    document.getElementById("kpiSpent")
+        .textContent = money(s.spent);
+
+    document.getElementById("kpiInventory")
+        .textContent = money(s.inventoryValue);
+
+    document.getElementById("kpiPotential")
+        .textContent = money(s.potentialProfit);
+
+    document.getElementById("kpiProfit")
+        .textContent = money(s.realProfit);
+
+    document.getElementById("kpiROI")
+        .textContent = pct(s.roi);
+
+    document.getElementById("kpiSold")
+        .textContent = integer(
+            s.sold.reduce(
+                (n,x)=>n+x.quantity,
+                0
+            )
+        );
+
+    const bought =
+        items.filter(x=>x.status==="bought").length;
+
+    const listed =
+        items.filter(x=>x.status==="listed").length;
+
+    document.getElementById("quickBought")
+        .textContent = bought;
+
+    document.getElementById("quickListed")
+        .textContent = listed;
+
+    document.getElementById("quickSold")
+        .textContent = s.sold.length;
+
+    document.getElementById("quickAvg")
+        .textContent = money(s.avgProfit);
+
+    updateGoal();
+    renderChart();
+    renderRecentSales();
+}
+
+/* =========================================================
+   RECENT SALES
+========================================================= */
+
+function renderRecentSales(){
+
+    const box =
+        document.getElementById("recentSales");
+
+    if(!box) return;
+
+    const sold =
+        [...items]
+            .filter(x=>x.status==="sold")
+            .sort(
+                (a,b)=>
+                    new Date(b.soldAt) -
+                    new Date(a.soldAt)
+            )
+            .slice(0,6);
+
+    if(!sold.length){
+
+        box.innerHTML =
+            emptyHTML(
+                "💸",
+                "Brak sprzedaży",
+                "Twoje pierwsze zyski pojawią się tutaj."
+            );
+
+        return;
+    }
+
+    box.innerHTML =
+        sold.map(item=>{
+
+            const profit =
+                itemRealProfit(item);
+
+            return `
+
+                <div class="activity-row">
+
+                    <div class="activity-icon">
+                        💰
+                    </div>
+
+                    <div class="activity-info">
+
+                        <div class="activity-name">
+                            ${escapeHTML(item.brand)}
+                        </div>
+
+                        <div class="activity-meta">
+                            ${escapeHTML(item.category)}
+                            ·
+                            ${new Date(item.soldAt)
+                                .toLocaleDateString("pl-PL")}
+                        </div>
+
+                    </div>
+
+                    <div class="activity-profit">
+                        +${money(profit)}
+                    </div>
+
+                </div>
+            `;
+
+        }).join("");
+}
+
+/* =========================================================
+   CHART
+========================================================= */
+
+function renderChart(){
+
+    const chart =
+        document.getElementById("chartBars");
+
+    if(!chart) return;
+
+    const now = new Date();
+
+    const days = [];
+
+    for(let i=13;i>=0;i--){
+
+        const date =
+            new Date(now);
+
+        date.setHours(0,0,0,0);
+        date.setDate(
+            date.getDate()-i
+        );
+
+        const value =
+            items
+                .filter(
+                    x=>
+                        x.status==="sold" &&
+                        x.soldAt &&
+                        new Date(x.soldAt)
+                            .toDateString() ===
+                        date.toDateString()
+                )
+                .reduce(
+                    (sum,x)=>
+                        sum+itemRealProfit(x),
+                    0
+                );
+
+        days.push({
+            date,
+            value
+        });
+    }
+
+    const max =
+        Math.max(
+            ...days.map(x=>Math.max(0,x.value)),
+            1
+        );
+
+    const total =
+        days.reduce(
+            (sum,x)=>sum+x.value,
+            0
+        );
+
+    document.getElementById("chartTotal")
+        .textContent = money(total);
+
+    chart.innerHTML =
+        days.map(day=>{
+
+            const height =
+                Math.max(
+                    3,
+                    Math.max(0,day.value) /
+                    max *
+                    100
+                );
+
+            return `
+
+                <div class="chart-bar-wrap">
+
+                    <div
+                        class="chart-bar"
+                        title="${money(day.value)}"
+                        style="height:${height}%">
+                    </div>
+
+                    <div class="chart-label">
+                        ${day.date.getDate()}
+                    </div>
+
+                </div>
+
+            `;
+
+        }).join("");
+}
+
+/* =========================================================
+   GOAL
+========================================================= */
+
+function soldProfitThisMonth(){
+
+    const now =
+        new Date();
+
+    return items
+        .filter(
+            x=>
+                x.status==="sold" &&
+                x.soldAt
+        )
+        .filter(x=>{
+
+            const date =
+                new Date(x.soldAt);
+
+            return (
+                date.getMonth() === now.getMonth() &&
+                date.getFullYear() === now.getFullYear()
+            );
+
+        })
+        .reduce(
+            (sum,x)=>
+                sum+itemRealProfit(x),
+            0
+        );
+}
+
+function updateGoal(){
+
+    const current =
+        soldProfitThisMonth();
+
+    const target =
+        Number(goal || 0);
+
+    const percentValue =
+        target > 0
+            ? Math.min(
+                100,
+                current / target * 100
+            )
+            : 0;
+
+    document.getElementById("goalCurrent")
+        .textContent = money(current);
+
+    document.getElementById("goalTarget")
+        .textContent = money(target);
+
+    document.getElementById("goalPercent")
+        .textContent = Math.round(percentValue)+"%";
+
+    document.getElementById("goalProgress")
+        .style.width = percentValue+"%";
+
+    const degrees =
+        percentValue * 3.6;
+
+    document.getElementById("goalDonut")
+        .style.background =
+            `conic-gradient(
+                var(--accent) 0deg,
+                var(--accent-2) ${degrees}deg,
+                #202838 ${degrees}deg,
+                #202838 360deg
+            )`;
+}
+
+function calculateGoal(){
+
+    const target =
+        Number(
+            document.getElementById("goalInput").value
+        ) || 0;
+
+    const avg =
+        Number(
+            document.getElementById("avgGoalProfit").value
+        ) || 0;
+
+    const days =
+        Number(
+            document.getElementById("workDays").value
+        ) || 1;
+
+    if(target<=0 || avg<=0){
+
+        toast(
+            "Podaj cel oraz średni zysk.",
+            "⚠"
+        );
+
+        return;
+    }
+
+    goal = target;
+
+    save();
+    updateGoal();
+
+    const required =
+        Math.ceil(target / avg);
+
+    const daily =
+        Math.ceil(required / days);
+
+    document.getElementById("goalPlan")
+        .innerHTML = `
+
+            <div class="stat-big">
+                ${integer(required)}
+            </div>
+
+            <div style="
+                color:var(--muted);
+                font-size:11px;
+                margin-top:4px">
+                produktów miesięcznie
+            </div>
+
+            <div style="
+                height:1px;
+                background:var(--border);
+                margin:20px 0">
+            </div>
+
+            <div class="stat-big">
+                ${integer(daily)}
+            </div>
+
+            <div style="
+                color:var(--muted);
+                font-size:11px;
+                margin-top:4px">
+                produktów dziennie
+            </div>
+
+            <div style="
+                margin-top:20px;
+                color:var(--green);
+                font-weight:800;
+                font-size:12px">
+                Cel: ${money(target)}
+            </div>
+        `;
+
+    toast(
+        "Cel został zapisany.",
+        "🎯"
+    );
+}
+
+/* =========================================================
+   SOLD
+========================================================= */
+
+function renderSold(){
+
+    const sold =
+        [...items]
+            .filter(x=>x.status==="sold")
+            .sort(
+                (a,b)=>
+                    new Date(b.soldAt) -
+                    new Date(a.soldAt)
+            );
+
+    const revenue =
+        sold.reduce(
+            (sum,x)=>
+                sum+Number(x.soldPrice||0),
+            0
+        );
+
+    const profit =
+        sold.reduce(
+            (sum,x)=>
+                sum+itemRealProfit(x),
+            0
+        );
+
+    document.getElementById("soldCount")
+        .textContent =
+            integer(
+                sold.reduce(
+                    (n,x)=>n+x.quantity,
+                    0
+                )
+            );
+
+    document.getElementById("soldRevenue")
+        .textContent = money(revenue);
+
+    document.getElementById("soldProfit")
+        .textContent = money(profit);
+
+    const box =
+        document.getElementById("soldTable");
+
+    if(!sold.length){
+
+        box.innerHTML =
+            emptyHTML(
+                "💰",
+                "Brak sprzedaży",
+                "Sprzedane produkty będą widoczne tutaj."
+            );
+
+        return;
+    }
+
+    box.innerHTML = `
+
+        <div class="table-wrap">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Produkt</th>
+                        <th>Ilość</th>
+                        <th>Koszt</th>
+                        <th>Sprzedaż</th>
+                        <th>Zysk</th>
+                        <th>ROI</th>
+                        <th>Data</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    ${sold.map(item=>{
+
+                        const cost =
+                            itemCost(item);
+
+                        const profit =
+                            itemRealProfit(item);
+
+                        const roi =
+                            cost > 0
+                                ? profit/cost*100
+                                : 0;
+
+                        return `
+
+                            <tr>
+
+                                <td>
+                                    <b>
+                                        ${escapeHTML(item.brand)}
+                                    </b>
+                                    <br>
+                                    <span style="
+                                        color:var(--muted);
+                                        font-size:9px">
+                                        ${escapeHTML(item.category)}
+                                    </span>
+                                </td>
+
+                                <td>
+                                    ${item.quantity}
+                                </td>
+
+                                <td>
+                                    ${money(cost)}
+                                </td>
+
+                                <td>
+                                    ${money(item.soldPrice)}
+                                </td>
+
+                                <td class="green">
+                                    +${money(profit)}
+                                </td>
+
+                                <td class="yellow">
+                                    ${pct(roi)}
+                                </td>
+
+                                <td>
+                                    ${new Date(item.soldAt)
+                                        .toLocaleDateString("pl-PL")}
+                                </td>
+
+                            </tr>
+
+                        `;
+
+                    }).join("")}
+
+                </tbody>
+
+            </table>
+
+        </div>
+    `;
+}
+
+/* =========================================================
+   STATISTICS
+========================================================= */
+
+function updateStatistics(){
+
+    const s =
+        calculateStats();
+
+    document.getElementById("statsItems")
+        .textContent = integer(items.length);
+
+    document.getElementById("statsSold")
+        .textContent = integer(
+            s.sold.reduce(
+                (n,x)=>n+x.quantity,
+                0
+            )
+        );
+
+    document.getElementById("statsROI")
+        .textContent = pct(s.roi);
+
+    document.getElementById("statsProfit")
+        .textContent = money(s.realProfit);
+
+    document.getElementById("statsAvgProfit")
+        .textContent = money(s.avgProfit);
+
+    document.getElementById("statsSellThrough")
+        .textContent = pct(s.soldThrough);
+
+    const best =
+        [...s.sold].sort(
+            (a,b)=>
+                itemRealProfit(b) -
+                itemRealProfit(a)
+        )[0];
+
+    const bestBox =
+        document.getElementById("bestSale");
+
+    if(!best){
+
+        bestBox.innerHTML =
+            emptyHTML(
+                "🏆",
+                "Brak sprzedaży",
+                "Najlepsza transakcja pojawi się tutaj."
+            );
+
+    }else{
+
+        bestBox.innerHTML = `
+
+            <div style="text-align:center">
+
+                <div style="
+                    font-size:48px">
+                    🏆
+                </div>
+
+                <div style="
+                    font-size:20px;
+                    font-weight:900;
+                    margin-top:5px">
+                    ${escapeHTML(best.brand)}
+                </div>
+
+                <div style="
+                    color:var(--muted);
+                    font-size:11px;
+                    margin-top:4px">
+                    ${escapeHTML(best.category)}
+                </div>
+
+                <div style="
+                    font-size:28px;
+                    font-weight:900;
+                    color:var(--green);
+                    margin-top:14px">
+                    +${money(itemRealProfit(best))}
+                </div>
+
+            </div>
+        `;
+    }
+
+    const now =
+        new Date();
+
+    const today =
+        items
+            .filter(
+                x=>
+                    x.status==="sold" &&
+                    x.soldAt
+            )
+            .filter(
+                x=>
+                    new Date(x.soldAt)
+                        .toDateString() ===
+                    now.toDateString()
+            )
+            .reduce(
+                (sum,x)=>
+                    sum+itemRealProfit(x),
+                0
+            );
+
+    const year =
+        items
+            .filter(
+                x=>
+                    x.status==="sold" &&
+                    x.soldAt &&
+                    new Date(x.soldAt)
+                        .getFullYear() ===
+                    now.getFullYear()
+            )
+            .reduce(
+                (sum,x)=>
+                    sum+itemRealProfit(x),
+                0
+            );
+
+    document.getElementById("summaryToday")
+        .textContent = money(today);
+
+    document.getElementById("summaryMonth")
+        .textContent = money(
+            soldProfitThisMonth()
+        );
+
+    document.getElementById("summaryYear")
+        .textContent = money(year);
+
+    document.getElementById("summaryAll")
+        .textContent = money(s.realProfit);
+}
+
+/* =========================================================
+   MODALS
+========================================================= */
+
+function openSettings(){
+
+    document.getElementById("modalTitle")
+        .textContent = "Ustawienia LUMP PRO";
+
+    document.getElementById("modalContent")
+        .innerHTML = `
+
+            <div class="card"
+                 style="
+                    padding:0;
+                    border:0;
+                    box-shadow:none;
+                    background:transparent">
+
+                <div class="card-title">
+                    Motyw
+                </div>
+
+                <div class="card-subtitle"
+                     style="margin-top:5px">
+                    Wybierz kolor akcentu.
+                </div>
+
+                <div class="theme-grid"
+                     style="margin-top:14px">
+
+                    <button class="theme"
+                        onclick="setTheme('#8b5cf6','#4f8cff')">
+                        🟣 Violet
+                    </button>
+
+                    <button class="theme"
+                        onclick="setTheme('#16c784','#00a878')">
+                        🟢 Emerald
+                    </button>
+
+                    <button class="theme"
+                        onclick="setTheme('#ff7a45','#ff4d6d')">
+                        🟠 Sunset
+                    </button>
+
+                    <button class="theme"
+                        onclick="setTheme('#3b82f6','#06b6d4')">
+                        🔵 Ocean
+                    </button>
+
+                    <button class="theme"
+                        onclick="setTheme('#ec4899','#8b5cf6')">
+                        💗 Pink
+                    </button>
+
+                </div>
+
+                <div style="
+                    height:1px;
+                    background:var(--border);
+                    margin:24px 0">
+                </div>
+
+                <div class="card-title">
+                    Dane
+                </div>
+
+                <div class="card-subtitle"
+                     style="margin-top:5px">
+                    Eksportuj lub importuj cały workspace.
+                </div>
+
+                <div style="
+                    display:flex;
+                    gap:8px;
+                    margin-top:14px">
+
+                    <button
+                        class="secondary"
+                        style="flex:1"
+                        onclick="exportData()">
+                        ↓ Eksport
+                    </button>
+
+                    <button
+                        class="secondary"
+                        style="flex:1"
+                        onclick="document.getElementById('importFile').click()">
+                        ↑ Import
+                    </button>
+
+                    <input
+                        id="importFile"
+                        type="file"
+                        accept=".json"
+                        style="display:none"
+                        onchange="importData(event)">
+
+                </div>
+
+                <button
+                    class="secondary danger"
+                    style="width:100%;margin-top:10px"
+                    onclick="clearAllData()">
+                    🗑 USUŃ WSZYSTKIE DANE
+                </button>
+
+            </div>
+        `;
+
+    document.getElementById("modalBg")
+        .classList.remove("hidden");
+}
+
+function closeModal(){
+    document.getElementById("modalBg")
+        .classList.add("hidden");
+}
+
+/* =========================================================
+   THEMES
+========================================================= */
+
+function setTheme(a,b){
+
+    document.documentElement
+        .style.setProperty("--accent",a);
+
+    document.documentElement
+        .style.setProperty("--accent-2",b);
+
+    localStorage.setItem(
+        THEME_KEY,
+        JSON.stringify({a,b})
+    );
+
+    toast(
+        "Motyw został zmieniony.",
+        "🎨"
+    );
+}
+
+function loadTheme(){
+
+    const saved =
+        loadJSON(THEME_KEY,null);
+
+    if(!saved) return;
+
+    document.documentElement
+        .style.setProperty(
+            "--accent",
+            saved.a
+        );
+
+    document.documentElement
+        .style.setProperty(
+            "--accent-2",
+            saved.b
+        );
+}
+
+/* =========================================================
+   DATA EXPORT
+========================================================= */
+
+function exportData(){
+
+    const data = {
+
+        app:"LUMP PRO",
+        version:2,
+
+        exportedAt:
+            new Date().toISOString(),
+
+        items,
+        goal
+
+    };
+
+    const blob =
+        new Blob(
+            [JSON.stringify(data,null,2)],
+            {type:"application/json"}
+        );
+
+    const url =
+        URL.createObjectURL(blob);
+
+    const a =
+        document.createElement("a");
+
+    a.href=url;
+    a.download=
+        `lump-pro-backup-${new Date()
+            .toISOString()
+            .slice(0,10)}.json`;
+
+    a.click();
+
+    URL.revokeObjectURL(url);
+
+    toast(
+        "Backup został pobrany.",
+        "↓"
+    );
+}
+
+function importData(event){
+
+    const file =
+        event.target.files[0];
+
+    if(!file) return;
+
+    const reader =
+        new FileReader();
+
+    reader.onload = ()=>{
+
+        try{
+
+            const data =
+                JSON.parse(reader.result);
+
+            if(!Array.isArray(data.items)){
+                throw new Error();
+            }
+
+            items =
+                data.items;
+
+            goal =
+                Number(data.goal || 0);
+
+            save();
+            updateAll();
+
+            closeModal();
+
+            toast(
+                "Dane zostały zaimportowane.",
+                "↑"
+            );
+
+        }catch{
+
+            toast(
+                "Nieprawidłowy plik backupu.",
+                "❌"
+            );
+        }
+    };
+
+    reader.readAsText(file);
+}
+
+/* =========================================================
+   CLEAR DATA
+========================================================= */
+
+function clearAllData(){
+
+    const yes =
+        confirm(
+            "Na pewno usunąć całe inventory, sprzedaże i cel?"
+        );
+
+    if(!yes) return;
+
+    items=[];
+    goal=0;
+
+    save();
+    updateAll();
+    closeModal();
+
+    toast(
+        "Wszystkie dane zostały usunięte.",
+        "🗑"
+    );
+}
+
+/* =========================================================
+   COMMAND PALETTE
+========================================================= */
+
+function openCommand(){
+
+    document.getElementById("commandBg")
+        .classList.remove("hidden");
+
+    document.getElementById("commandInput")
+        .value="";
+
+    setTimeout(()=>{
+        document.getElementById("commandInput")
+            .focus();
+    },50);
+}
+
+function closeCommand(){
+
+    document.getElementById("commandBg")
+        .classList.add("hidden");
+}
+
+function commandGo(page){
+
+    closeCommand();
+    showPage(page);
+}
+
+function filterCommands(){
+
+    const query =
+        document.getElementById("commandInput")
+            .value
+            .toLowerCase();
+
+    document
+        .querySelectorAll(".command-item")
+        .forEach(item=>{
+
+            item.style.display =
+                item.textContent
+                    .toLowerCase()
+                    .includes(query)
+                    ? "flex"
+                    : "none";
+        });
+}
+
+/* =========================================================
+   KEYBOARD
+========================================================= */
+
+document.addEventListener("keydown",event=>{
+
+    if(
+        (event.ctrlKey || event.metaKey) &&
+        event.key.toLowerCase()==="k"
+    ){
+
+        event.preventDefault();
+        openCommand();
+
+    }
+
+    if(event.key==="Escape"){
+
+        closeCommand();
+        closeModal();
+
+    }
+
+    if(
+        event.altKey &&
+        event.key>="1" &&
+        event.key<="5"
+    ){
+
+        const pages=[
+            "dashboard",
+            "add",
+            "inventory",
+            "sold",
+            "stats"
+        ];
+
+        const page =
+            pages[Number(event.key)-1];
+
+        if(page){
+            showPage(page);
+        }
+    }
+});
+
+/* =========================================================
+   UPDATE ALL
+========================================================= */
+
+function updateAll(){
+
+    updateDashboard();
+    renderInventory();
+    renderSpecialLists();
+    renderSold();
+    updateStatistics();
+
+    const count =
+        document.getElementById("inventoryCount");
+
+    if(count){
+        count.textContent =
+            integer(items.length);
+    }
+}
+
+/* =========================================================
+   INIT
+========================================================= */
+
+loadTheme();
+calculatePreview();
+
+if(
+    localStorage.getItem(LOGIN_KEY)==="1"
+){
+
+    document
+        .getElementById("loginScreen")
+        .classList.add("hidden");
+
+    document
+        .getElementById("app")
+        .classList.remove("hidden");
+
+    updateAll();
+}
+
+</script>
+
+</body>
+</html>
